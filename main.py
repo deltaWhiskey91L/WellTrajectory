@@ -10,9 +10,6 @@ import WellPlot
 root = os.path.dirname(Survey.__file__)
 survey_file = root + '\Input Files\Surveys\survey.csv'
 
-print('test')
-sys.exit()
-
 # LOGGING
 root_path = os.path.dirname(os.path.realpath(__file__))
 logging.basicConfig(filename=root_path + '/Logs/run.log', level=logging.DEBUG)
