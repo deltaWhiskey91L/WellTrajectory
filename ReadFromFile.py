@@ -2,7 +2,6 @@ import configparser
 import datetime
 import logging
 import os
-import sys
 
 # LOGGING
 root_path = os.path.dirname(os.path.realpath(__file__))
@@ -24,12 +23,13 @@ class Config:
             cfg.read(file)
         except configparser.Error:
             self.method = 'MCM'
-            self.units_out = 'PetroImperial'
+            self.units = 'oilfield'
             t = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
             logging.info('CONFIG: {0} Missing Config.ini and subsequent configuration options. Using default options.'
                          .format(t))
 
         self.method = get_calculation_method(cfg)
+        self.units = get_units(cfg)
 
 
 def read_file(file):
@@ -51,7 +51,7 @@ def get_option(config, section, option):
     else:
         option_value = None
         timestamp = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
-        logging.debug('CONFIG: {0} {1} is missing {2} value.'.format(timestamp, section, option))
+        logging.critical('CONFIG: {0} {1} is missing {2} value.'.format(timestamp, section, option))
     return option_value
 
 
@@ -62,6 +62,25 @@ def get_calculation_method(config, section='ConfigOptions', option='calculation_
         return 'ASC'
     else:
         return 'MCM'
+
+
+def get_units(config, section='ConfigOptions', option='units_out'):
+    units = get_option(config, section, option)
+    try:
+        config.get('PossibleOptionsList', 'unit_list').split(',').index(units)
+    except configparser.Error:
+        t = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
+        logging.info('CONFIG: {0} Config.ini missing possible units list.'.format(t))
+        try:
+            ['SI', 'oilfied'].index(units)
+        except ValueError:
+            return 'oilfield'
+        else:
+            return units
+    except ValueError:
+        return 'oilfield'
+    else:
+        return units
 
 
 def is_in_asc_list(calc_method, config, section='PossibleOptionsList', option='advanced_spline_method'):
@@ -86,23 +105,3 @@ def is_in_asc_list(calc_method, config, section='PossibleOptionsList', option='a
             return True
     else:
         return True
-
-
-def is_in_units_list(unit, config, section='PossibleOptionsList', option='unit_list'):
-    try:
-        config.get(section, option).split(',').index(unit)
-    except configparser.Error:
-        t = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
-        logging.info('CONFIG: {0} Config.ini missing possible spellings for output units option.'.format(t))
-        try:
-            ['PetroImperial, Metric'].index(unit)
-        except ValueError:
-            return 'oilfield'
-        else:
-            return unit
-
-
-
-
-
-

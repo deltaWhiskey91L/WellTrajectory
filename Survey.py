@@ -58,7 +58,6 @@ class DirectionalSurvey:
         self.inc_accuracy = get_item(survey_file, 'Inclination Accuracy:', if_none=0.1)     # Accuracy at 1 std
         self.inc_resolution = get_item(survey_file, 'Inclination Resolution:', if_none=0.025)
         self.optional = get_item(survey_file, 'Optional:', 'str')
-        self.method = None
 
         try:
             self.points = survey_pts(survey_file)
@@ -88,11 +87,11 @@ class DirectionalSurvey:
         self.field_alt = list([self.altitude])
 
 
-def calculate_survey(survey, curve_method='MCM'):
+def calculate_survey(survey, config):
     t = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
     logging.info('{0} INFO: Calculating the detailed survey.'.format(t))
 
-    if curve_method is 'ASC':
+    if config.method is 'ASC':
         survey.east, survey.north, survey.tvd, survey.dls, survey.turn, survey.build, survey.wbr = \
             asc.survey(survey.md, survey.inc, survey.azi)
     else:
