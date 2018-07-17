@@ -1,10 +1,9 @@
-import logging
 import math
 import numpy as np
 import os
 
 from Survey import AdvancedSplineCurve as ASC, MinimumCurvature as MCM
-from Utilities import unitconverter as units, mylogging
+from Utilities import mylogging
 
 root_path = os.path.dirname(os.path.realpath(__file__))
 
