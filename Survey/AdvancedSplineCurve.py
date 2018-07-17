@@ -1,20 +1,5 @@
-import datetime
-import logging
-import os
-
-import math as m
+from Utilities import mylogging
 import numpy as np
-import UnitConverter as Units
-
-# LOGGING
-root_path = os.path.dirname(os.path.realpath(__file__))
-logging.basicConfig(filename=root_path + '/Logs/run.log', level=logging.DEBUG)
-# Logging Levels:
-# CRITICAL
-# ERROR
-# WARNING
-# INFO
-# DEBUG
 
 # Advanced Spline Curve 3D Wellbore Trajectory Model
 # Abughaban, M., Eustes, A., et al. 2016. Advanced Trajectory Computational Model Improves Borehole Positioning,
@@ -22,11 +7,22 @@ logging.basicConfig(filename=root_path + '/Logs/run.log', level=logging.DEBUG)
 
 
 def survey(md, inc, azi):
+    """Calculates well survey using Advanced Spline Curve Method
+
+    :param md: Array of Measured Depth (m)
+    :type md: np.array
+    :param inc: Array of Inclination (dega)
+    :type inc: np.array
+    :param azi: Array of Azimuth (dega)
+    :type azi: np.array
+    :return [easting (m), northing (m), tvd (m), dls (dega/m), build (dega/m), turn (dega/m), rugosity]
+    :rtype: [float, float, float, float, float, float, float]
+    """
+    mylogging.runlog.info('Calculating the survey using Advanced Spline Curvature.')
+    mylogging.alglog.info('ASC Advanced Spline Curve')
+
     n = len(md)
-    s = np.array(md)
-    inc = np.array(inc)
-    azi = np.array(azi)
-    h = s[1:] - s[:-1]
+    h = md[1:] - md[:-1]
     u = 2 * (h[1:] + h[:-1])
 
     lam, v, z, y_2nd = list(), list(), list(), list()
@@ -40,7 +36,6 @@ def survey(md, inc, azi):
     k = curvature(lam, h, z, y_2nd)
     curve = curve_rate(y_2nd, k=k)
     wbr = rugosity(lam, y_2nd, z, k=k)
-
     return position[0], position[1], position[2], curve[0], curve[1], curve[2], wbr
 
 
@@ -62,8 +57,8 @@ def curve_rate(y_2nd, k=None, lam=None, h=None, z=None):
 
     dls, build, turn = list(), list(), list()
     for i in range(0, len(y_2nd[0])):
-        dls.append(k[i] * 180 / np.pi * 100)
-        build.append(y_2nd[0][i] * 180 / np.pi)
+        dls.append(np.degrees(k[i]))
+        build.append(np.degrees(y_2nd[0][i]))
         turn.append(np.linalg.norm([y_2nd[0][i], y_2nd[1][i]]))
     return dls, build, turn
 
@@ -88,54 +83,60 @@ def curvature(lam, h, z, y_2nd=None):
             y_2nd.append(Y_second(lam, h, z[coord]))
     k = list()
     for i in range(0, len(y_2nd[0])):
-        k.append(Units.from_si(np.linalg.norm([y_2nd[0][i], y_2nd[1][i], y_2nd[2][i]]), 'dega'))
+        k.append(np.linalg.norm([y_2nd[0][i], y_2nd[1][i], y_2nd[2][i]]))
     return k
 
 
 def lambda_vector(inc, azi, xyz_dimension):
+    """
+    :param inc: Inclination (rad)
+    :type inc: np.array
+    :param azi: Azimuth (rad)
+    :type azi: np.array
+    :param xyz_dimension:
+    :type xyz_dimension: int
+    :return:
+    """
+
     lam = list()
-    inc = inc * np.pi / 180
-    azi = azi * np.pi / 180
     for i in range(0, len(azi)):
         if xyz_dimension == 0:
-            lam.append(m.sin(inc[i]) * m.sin(azi[i]))
+            lam.append(np.sin(inc[i]) * np.sin(azi[i]))
         elif xyz_dimension == 1:
-            lam.append(m.sin(inc[i] * m.cos(azi[i])))
+            lam.append(np.sin(inc[i]) * np.cos(azi[i]))
         else:
-            lam.append(m.cos(inc[i]))
+            lam.append(np.cos(inc[i]))
     return lam
 
 
 def v_vector(lam, h):
-    n = len(lam)
-    v = np.zeros(n - 2)
-    for i in range(1, n - 1):
+    n = len(lam) - 2
+    v = np.zeros(n)
+    for i in range(1, n):
         v[i - 1] = 6 * ((lam[i + 1] - lam[i])/h[i] - (lam[i] - lam[i - 1])/h[i - 1])
     return v
 
 
 def z_vector(u, h, v):
     """Diagonal Matrix Linear Algebra Solution"""
-    lin_A = np.zeros((len(u), len(u)), dtype=float)
     n = len(u)
+    Z = np.zeros((n, n), dtype=float)
+
     # First Line in A-matrix
-    lin_A[0][0] = u[1] + h[0] + h[0]**2 / h[1]
-    lin_A[0][1] = h[1] - h[0]**2 / h[1]
+    Z[0][0] = u[0] + h[0] + h[0]**2 / h[1]
+    Z[0][1] = h[1] - h[0]**2 / h[1]
 
     # Setup diagonal matrix
     for i in range(1, n - 1):
-        lin_A[i][i - 1] = h[i - 1]
-        lin_A[i][i] = u[i]
-        lin_A[i][i + 1] = h[i]
+        Z[i][i - 1] = h[i]
+        Z[i][i] = u[i]
+        Z[i][i + 1] = h[i + 1]
 
     # Last Line in A-matrix
-    lin_A[n - 1][n - 2] = h[n - 2] - h[n - 1]**2 / h[n - 2]
-    lin_A[n - 1][n - 1] = u[n - 1] + h[n - 1] + h[n - 1]**2 / h[n - 2]
+    Z[-1][-2] = h[-2] - h[-1]**2 / h[-2]
+    Z[-1][-1] = u[-1] + h[-1] + h[-1]**2 / h[-2]
 
-    try:
-        z_slv = np.linalg.solve(lin_A, v)
-    except:
-        z_slv = None
+    z_slv = np.linalg.solve(Z, v)
 
     z = list()
     z.append(z_0(z_slv, h))
@@ -155,7 +156,7 @@ def B_vector(lam, h, z):
 
 def C_vector(z):
     C = np.zeros(len(z) - 1)
-    for i in range(0, len(z) - 1 - 1):
+    for i in range(0, len(z) - 1):
         C[i] = z[i] / 2
     return C
 
@@ -172,8 +173,7 @@ def z_0(z, h):
 
 
 def z_n(z, h):
-    n = len(z)
-    return z[n - 2] + (z[n - 2] - z[n - 3]) * h[n - 1] / h[n - 2]
+    return z[-1] + (z[-1] - z[-2]) * h[-1] / h[-2]
 
 
 def delta_position(A, B, C, D, h):
