@@ -51,7 +51,7 @@ def next_pt(delta_md, inc, azi, tolerance=1e-10):
     north = delta_md * ratio / 2.0 * (np.sin(inc[0]) * np.cos(azi[0]) + np.sin(inc[1]) * np.cos(azi[1]))
     east = delta_md * ratio / 2.0 * (np.sin(inc[0]) * np.sin(azi[0]) + np.sin(inc[1]) * np.sin(azi[1]))
     tvd = delta_md * ratio / 2.0 * (np.cos(inc[0]) + np.cos(inc[1]))
-    dls = units.from_si(beta, 'dega') * 100.0 / delta_md
+    dls = np.degrees(beta) * 100.0 / delta_md
 
     return tvd, north, east, dls
 
@@ -61,4 +61,4 @@ def buildturn_rate(angle0, angle1, delta_md):
     if delta_md == 0:
         return 0
 
-    return delta_angle * 100 / delta_md
+    return np.degrees(delta_angle) * 100 / delta_md

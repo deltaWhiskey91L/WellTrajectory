@@ -43,7 +43,7 @@ def survey_csv(survey, name=None, method='mcm', iteration=None):
 
     for i in range(0, len(survey[0])):
         line = [str(survey[0][i]) + ',' + str(np.degrees(survey[1][i])) + ',' + str(np.degrees(survey[2][i])) + ',' + str(survey[3][i]) + ','
-                + str(survey[4][i]) + ',' + str(survey[5][i]) + ',' + str(survey[6][i]) + ',' + str(np.degrees(survey[7][i])) + ','
-                + str(np.degrees(survey[8][i])) + ',' + str(np.degrees(survey[9][i])) + ',' + str(np.degrees(survey[10][i])) + ',' + str(survey[11]) + '\n']
+                + str(survey[4][i]) + ',' + str(survey[5][i]) + ',' + str(survey[6][i]) + ',' + str(survey[7][i]) + ','
+                + str(survey[8][i]) + ',' + str(survey[9][i]) + ',' + str(survey[10][i]) + ',' + str(survey[11]) + '\n']
         f.writelines(line)
     f.close()

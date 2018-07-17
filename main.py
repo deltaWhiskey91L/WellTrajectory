@@ -1,6 +1,7 @@
 from Utilities import mylogging, wellplot as Plot, writetofile as write, readfromfile as read
 import montecarlo, trajectory
 import matplotlib.pyplot as plt
+from time import time
 import numpy as np
 import os
 
@@ -69,20 +70,20 @@ def montecarlo_mcm(file='hrcg.csv'):
 
 if __name__ == '__main__':
     __init__()
-    azi = 285
 
+    tic = time()
     asc(name='hrcg', target=185)
     mcm(name='hrcg', target=185)
-    asc(name='hrcg100', target=185)
-    mcm(name='hrcg100', target=185)
-
+    toc = time()
+    print('Elapsed time =', toc - tic, 's')
 
     hrmcm = read.complete_survey(__root_path + '/Results/hrcg_mcm.csv', return_dataframe=True)
     hrasc = read.complete_survey(__root_path + '/Results/hrcg_asc.csv', return_dataframe=True)
     Plot.plot_horizontal_section([hrmcm, hrasc], label=['MCM', 'ASC'], legend=True,
-                                 color=['k', 'b', 'r', 'm'])
-    Plot.plot_vertical_section([hrmcm, hrasc], label=['MCM', 'ASC'], target_azimuth=azi, legend=True,
-                               color=['k', 'b', 'r', 'm'])
+                                 color=['k', 'b'])
+    Plot.plot_vertical_section([hrmcm, hrasc], label=['MCM', 'ASC'], target_azimuth=185, legend=True,
+                               color=['k', 'b'])
+
     plt.show()
 
     print('Target Destroyed')
