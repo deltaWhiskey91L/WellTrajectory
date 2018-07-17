@@ -20,7 +20,6 @@ def calculate_survey(md, inc, azi, target_azi=None, adj=None, method='ASC'):
     :param azi: azimuth (dega)
     :type azi: list([float])
     :param adj: wellhead position adjustment
-    :type adj: list
     :param target_azi: Target Azimuth (dega)
     :type target_azi: float
     :param method: Calculation method. 'ASC' (Advanced Spline Curve)
@@ -50,7 +49,7 @@ def calculate_survey(md, inc, azi, target_azi=None, adj=None, method='ASC'):
         return md, inc, azi, tvd, north, east, v_section, dls, build, turn, rugosity, target_azi
     else:
         v_adj = vertical_section(adj[1], adj[0], target_azi)
-        return md, inc, azi, tvd, np.add(north, adj[1][0]), np.add(east, adj[0][0]), np.add(v_section, v_adj[0]), dls, build, turn, rugosity, target_azi
+        return md, inc, azi, tvd, np.add(north, adj[1]), np.add(east, adj[0]), np.add(v_section, v_adj), dls, build, turn, rugosity, target_azi
 
 
 def vertical_section(northing, easting, target_azimuth):
@@ -66,10 +65,13 @@ def vertical_section(northing, easting, target_azimuth):
     :return section: list([float])
     """
     departure_dist = departure(northing, easting)
+
+    if isinstance(northing, float) is True:
+        return departure_dist * np.cos(np.radians(target_azimuth - closure_azimuth(northing, easting)))
+
     section = list()
     for i in range(0, len(northing)):
         section.append(departure_dist[i] * np.cos(np.radians(target_azimuth - closure_azimuth(northing[i], easting[i]))))
-
     return section
 
 
@@ -82,6 +84,9 @@ def departure(northing, easting):
     :return: total_departure
     :type: list([float])
     """
+
+    if isinstance(northing, float) is True:
+        return np.sqrt(northing ** 2 + easting ** 2)
 
     total_departure = list()
     for i in range(0, len(northing)):

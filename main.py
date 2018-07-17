@@ -72,17 +72,48 @@ if __name__ == '__main__':
     __init__()
 
     tic = time()
-    asc(name='hrcg', target=185)
-    mcm(name='hrcg', target=185)
+    asc(name='12', target=345)
+    mcm(name='12', target=345)
+    asc(name='18', target=345, adj=[33.98, 8.39])
+    mcm(name='18', target=345, adj=[33.98, 8.39])
+    asc(name='22', target=345, adj=[67.84, 16.4])
+    mcm(name='22', target=345, adj=[67.84, 16.4])
+    asc(name='29', target=345, adj=[101.74, 23.76])
+    mcm(name='29', target=345, adj=[101.74, 23.76])
     toc = time()
     print('Elapsed time =', toc - tic, 's')
 
-    hrmcm = read.complete_survey(__root_path + '/Results/hrcg_mcm.csv', return_dataframe=True)
-    hrasc = read.complete_survey(__root_path + '/Results/hrcg_asc.csv', return_dataframe=True)
-    Plot.plot_horizontal_section([hrmcm, hrasc], label=['MCM', 'ASC'], legend=True,
-                                 color=['k', 'b'])
-    Plot.plot_vertical_section([hrmcm, hrasc], label=['MCM', 'ASC'], target_azimuth=185, legend=True,
-                               color=['k', 'b'])
+    # hrmcm = read.complete_survey(__root_path + '/Results/hrcg_mcm.csv', return_dataframe=True)
+    # hrasc = read.complete_survey(__root_path + '/Results/hrcg_asc.csv', return_dataframe=True)
+    # Plot.plot_horizontal_section([hrmcm, hrasc], label=['MCM', 'ASC'], legend=True,
+    #                              color=['k', 'b'])
+    # Plot.plot_vertical_section([hrmcm, hrasc], label=['MCM', 'ASC'], target_azimuth=185, legend=True,
+    #                            color=['k', 'b'])
+
+    asc12 = read.complete_survey(__root_path + '/Results/12_asc.csv', return_dataframe=True)
+    mcm12 = read.complete_survey(__root_path + '/Results/12_mcm.csv', return_dataframe=True)
+    asc18 = read.complete_survey(__root_path + '/Results/18_asc.csv', return_dataframe=True)
+    mcm18 = read.complete_survey(__root_path + '/Results/18_mcm.csv', return_dataframe=True)
+    asc22 = read.complete_survey(__root_path + '/Results/22_asc.csv', return_dataframe=True)
+    mcm22 = read.complete_survey(__root_path + '/Results/22_mcm.csv', return_dataframe=True)
+    asc29 = read.complete_survey(__root_path + '/Results/29_asc.csv', return_dataframe=True)
+    mcm29 = read.complete_survey(__root_path + '/Results/29_mcm.csv', return_dataframe=True)
+    Plot.plot_horizontal_section([mcm12, asc12, mcm18, asc18, mcm22, asc22, mcm29, asc29], legend=True,
+                                 label=['Lynch A Hz 33 HM - MCM', 'Lynch A Hz 33 HM - ASC', 'Lynch A Hz 34 HM - MCM',
+                                        'Lynch A Hz 34 HM - ASC', 'Lynch A Hz 35 HM - MCM', 'Lynch A Hz 35 HM - ASC',
+                                        'Lynch A Hz 36 HM - MCM', 'Lynch A Hz 36 HM - ASC'],
+                                 color=[(163 / 255, 147 / 255, 130 / 255), (97 / 255, 70 / 255, 43 / 255),
+                                        (220 / 255, 74 / 255, 38 / 255), (127 / 255, 48 / 255, 53 / 255),
+                                        (113 / 255, 197 / 255, 232 / 255), (0 / 255, 79 / 255, 113 / 255),
+                                        (250 / 255, 224 / 255, 83 / 255), (201 / 255, 151 / 255, 0 / 255)])
+    Plot.plot_vertical_section([mcm12, asc12, mcm18, asc18, mcm22, asc22, mcm29, asc29], legend=True, target_azimuth=76,
+                                 label=['Lynch A Hz 33 HM - MCM', 'Lynch A Hz 33 HM - ASC', 'Lynch A Hz 34 HM - MCM',
+                                        'Lynch A Hz 34 HM - ASC', 'Lynch A Hz 35 HM - MCM', 'Lynch A Hz 35 HM - ASC',
+                                        'Lynch A Hz 36 HM - MCM', 'Lynch A Hz 36 HM - ASC'],
+                                 color=[(163 / 255, 147 / 255, 130 / 255), (97 / 255, 70 / 255, 43 / 255),
+                                        (220 / 255, 74 / 255, 38 / 255), (127 / 255, 48 / 255, 53 / 255),
+                                        (113 / 255, 197 / 255, 232 / 255), (0 / 255, 79 / 255, 113 / 255),
+                                        (250 / 255, 224 / 255, 83 / 255), (201 / 255, 151 / 255, 0 / 255)])
 
     plt.show()
 
