@@ -1,7 +1,6 @@
 from Utilities import mylogging
 import numpy as np
 from numpy import linalg as la
-from time import time
 
 # Advanced Spline Curve 3D Wellbore Trajectory Model
 # Abughaban, M., Eustes, A., et al. 2016. Advanced Trajectory Computational Model Improves Borehole Positioning,
@@ -23,6 +22,10 @@ def survey(md, inc, azi):
     mylogging.runlog.info('Calculating the survey using Advanced Spline Curvature.')
     mylogging.alglog.info('ASC Advanced Spline Curve')
 
+    md = np.delete(md, 0)
+    inc = np.delete(inc, 0)
+    azi = np.delete(azi, 0)
+
     n = len(md)
     h = md[1:] - md[:-1]
 
@@ -33,20 +36,22 @@ def survey(md, inc, azi):
         z.append(z_vector(h, v[coord]))
         y_2nd.append(Y_second(lam[coord], h, z[coord]))
 
-    position = trajectory(h, lam, z, n)
+    position = trajectory(h, lam, z, n, md)
     k = curvature(lam, h, z, y_2nd)
     curve = curve_rate(y_2nd, k=k)
     wbr = rugosity(lam, y_2nd, z, k=k)
     return position[0], position[1], position[2], curve[0], curve[1], curve[2], wbr
 
 
-def trajectory(h, lam, z, n):
-    position = [np.zeros(n), np.zeros(n), np.zeros(n)]
+def trajectory(h, lam, z, n, md):
+    position = [np.zeros(n + 1), np.zeros(n + 1), np.zeros(n + 1)]
     for coord in range(0, 3):
         B, C, D = B_vector(lam[coord], h, z[coord]), C_vector(z[coord]), D_vector(z[coord], h)
-        for i in range(1, n):
+        for i in range(1, n + 1):
             delta = 0.
-            for j in range(0, i):
+            if coord == 2:
+                delta += md[0]
+            for j in range(0, i - 1):
                 delta += delta_position(lam[coord][j], B[j], C[j], D[j], h[j])
             position[coord][i] = delta
     return position
@@ -77,17 +82,15 @@ def lambda_vector(inc, azi, xyz_dimension):
 def v_vector(lam, h):
     n = len(lam) - 2
     v = np.zeros(n)
-    for i in range(1, n):
+    for i in range(1, n + 1):
         v[i - 1] = 6 * ((lam[i + 1] - lam[i])/h[i] - (lam[i] - lam[i - 1])/h[i - 1])
     return v
 
 
-def z_matrix_inv(u, h):
+def z_matrix_inv(h):
     """
     Sets up the Z-matrix inverse
 
-    :param u: u-vector, u
-    :type u: np.array
     :param h: delta MD, h
     :type h: np.array
     :return: inverse Z-matrix, Z**(-1)
@@ -103,9 +106,9 @@ def z_matrix_inv(u, h):
 
     # Setup diagonal matrix
     for i in range(1, n - 1):
-        Z[i][i - 1] = h[i]
+        Z[i][i - 1] = h[i - 1]
         Z[i][i] = 2 * (h[i - 1] + h[i])
-        Z[i][i + 1] = h[i + 1]
+        Z[i][i + 1] = h[i]
 
     # Last Line in A-matrix
     Z[-1][-2] = h[-2] - h[-1]**2 / h[-2]
@@ -147,9 +150,9 @@ def z_vector(h, v):
 
     # Setup diagonal matrix
     for i in range(1, n - 1):
-        Z[i][i - 1] = h[i]
+        Z[i][i - 1] = h[i - 1]
         Z[i][i] = 2 * (h[i - 1] + h[i])
-        Z[i][i + 1] = h[i + 1]
+        Z[i][i + 1] = h[i]
 
     # Last Line in A-matrix
     Z[-1][-2] = h[-2] - h[-1]**2 / h[-2]
@@ -188,7 +191,7 @@ def D_vector(z, h):
 
 
 def z_0(z, h):
-    return z[0] - (z[1] - z[0]) * h[0] / h[1]
+    return z[0] + (z[0] - z[1]) * h[0] / h[1]
 
 
 def z_n(z, h):
@@ -225,7 +228,7 @@ def curve_rate(y_2nd, k=None, lam=None, h=None, z=None):
     if k is None:
         k = curvature(lam, h, z)
 
-    dls, build, turn = list(), list(), list()
+    dls, build, turn = list([0]), list([0]), list([0])
     for i in range(0, len(y_2nd[0])):
         dls.append(np.degrees(k[i]) * 100)
         build.append(np.degrees(y_2nd[0][i]) * 100)
@@ -236,7 +239,7 @@ def curve_rate(y_2nd, k=None, lam=None, h=None, z=None):
 def rugosity(lam, y_2nd, z, h=None, k=None):
     if k is None:
         k = curvature(lam, h, z)
-    wbr = list()
+    wbr = list([0])
     for i in range(0, len(y_2nd[0])):
         det_matrix = list()
         for coord in range(0, 3):

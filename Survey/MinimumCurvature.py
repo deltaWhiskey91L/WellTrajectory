@@ -1,4 +1,3 @@
-from Utilities import unitconverter as units
 import numpy as np
 
 
@@ -12,7 +11,7 @@ def survey(md, inc, azi):
     :type inc: np.array
     :param azi: Array of azimuth measurements
     :type azi: np.array
-    :return: tvd, north, east, dls at survey points along the well.
+    :return: east, north, tvd, dls at survey points along the well.
     """
 
     tvd, north, east, dls, build, turn = list([0]), list([0]), list([0]), list([0]), list([0]), list([0])
