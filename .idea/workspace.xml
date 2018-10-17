@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e51d356-d052-45bd-b8cb-8cd52cab05f8" name="Default" comment="v0.9.12.1 &#10;Updated read survey file to interpret units if present in the second line.">
-      <change afterPath="$PROJECT_DIR$/Survey/Generic.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Survey/AverageAngle.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Survey/BalancedTangential.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Survey/Tangential.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Survey/VectorAverage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Utilities/readfromfile.py" beforeDir="false" afterPath="$PROJECT_DIR$/Utilities/readfromfile.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,27 +28,28 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="csv" value="1" />
+          <entry key="csv" value="2" />
           <entry key="out" value="1" />
-          <entry key="py" value="9" />
+          <entry key="py" value="13" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="9" />
+          <entry key="PLAIN_TEXT" value="3" />
+          <entry key="Python" value="13" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="119" />
-          <entry key="Python" value="1409" />
+          <entry key="PLAIN_TEXT" value="250" />
+          <entry key="Python" value="2676" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="1409" />
-          <entry key="txt" value="119" />
+          <entry key="csv" value="7" />
+          <entry key="py" value="2676" />
+          <entry key="txt" value="243" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -58,8 +60,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="549">
-              <caret line="120" column="45" selection-start-line="120" selection-start-column="45" selection-end-line="120" selection-end-column="45" />
+            <state relative-caret-position="667">
+              <caret line="29" column="71" lean-forward="true" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="71" />
               <folding>
                 <element signature="e#0#75#0" expanded="true" />
               </folding>
@@ -70,22 +72,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+            <state relative-caret-position="317">
+              <caret line="25" selection-start-line="25" selection-end-line="25" selection-end-column="45" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Utilities/readfromfile.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="72" column="8" lean-forward="true" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#55#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -94,15 +84,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Data/594survey.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3482" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/trajectory.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="30" column="4" lean-forward="true" selection-start-line="30" selection-start-column="4" selection-end-line="32" selection-end-column="35" />
+            <state relative-caret-position="207">
+              <caret line="120" selection-start-line="120" selection-end-line="121" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -133,21 +116,33 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Survey/MinimumCurvature.py">
+        <entry file="file://$PROJECT_DIR$/Survey/Tangential.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="22" />
+            <state relative-caret-position="455">
+              <caret line="49" selection-start-line="3" selection-end-line="49" />
+              <folding>
+                <marker date="1539810055390" expanded="true" signature="1154:1155" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Survey/Tangential.py">
+        <entry file="file://$PROJECT_DIR$/Survey/BalancedTangential.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="18" column="35" lean-forward="true" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
+            <state relative-caret-position="230">
+              <caret line="43" column="24" lean-forward="true" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Survey/VectorAverage.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-5">
+              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
               <folding>
-                <marker date="1539808586360" expanded="true" signature="811:812" ph="..." />
+                <marker date="1539811025686" expanded="true" signature="1358:1685" ph="..." />
               </folding>
             </state>
           </provider>
@@ -181,10 +176,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Plot.py" />
-        <option value="$PROJECT_DIR$/ReadFromFile.py" />
-        <option value="$PROJECT_DIR$/WriteToFile.py" />
-        <option value="$PROJECT_DIR$/Logs/run.log" />
         <option value="$PROJECT_DIR$/Logs/alg.log" />
         <option value="$PROJECT_DIR$/test.csv" />
         <option value="$PROJECT_DIR$/MonteCarlo.py" />
@@ -197,7 +188,6 @@
         <option value="$PROJECT_DIR$/Survey/Location.py" />
         <option value="$PROJECT_DIR$/Utilities/UnitConverter.py" />
         <option value="$PROJECT_DIR$/montecarlo.py" />
-        <option value="$PROJECT_DIR$/Utilities/mylogging.py" />
         <option value="$PROJECT_DIR$/Data/12.csv" />
         <option value="$PROJECT_DIR$/Data/22.csv" />
         <option value="$PROJECT_DIR$/Data/18.csv" />
@@ -229,9 +219,14 @@
         <option value="$PROJECT_DIR$/Survey/Synthetic.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/Survey/Generic.py" />
-        <option value="$PROJECT_DIR$/Survey/Tangential.py" />
-        <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/Utilities/readfromfile.py" />
+        <option value="$PROJECT_DIR$/Data/594survey.csv" />
+        <option value="$PROJECT_DIR$/Survey/BalancedTangential.py" />
+        <option value="$PROJECT_DIR$/Utilities/mylogging.py" />
+        <option value="$PROJECT_DIR$/Survey/Tangential.py" />
+        <option value="$PROJECT_DIR$/Survey/AverageAngle.py" />
+        <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/Survey/VectorAverage.py" />
       </list>
     </option>
   </component>
@@ -293,6 +288,7 @@
       <recent name="C:\Python\AdvancedSplineCurve\Data" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Python\Well_Trajectory\Survey" />
       <recent name="C:\Python\AdvancedSplineCurve\Utilities" />
       <recent name="C:\Python\AdvancedSplineCurve\Data" />
     </key>
@@ -483,19 +479,33 @@
       <option name="project" value="LOCAL" />
       <updated>1539807251146</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="v0.9.12.2&#10;Updated read survey file to add a MD=0 line at the beginning if not present.">
+      <created>1539808790653</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1539808790653</updated>
+    </task>
+    <task id="LOCAL-00011" summary="v0.9.13&#10;Generic survey calculations such as closure, departure, and section.">
+      <created>1539808828680</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1539808828680</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2281787" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2281787" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3290398" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32660332" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32660332" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39812645" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -542,13 +552,11 @@
     <MESSAGE value="v0.9.11" />
     <MESSAGE value="v0.9.12 Reorganized the folder structure" />
     <MESSAGE value="v0.9.12.1 &#10;Updated read survey file to interpret units if present in the second line." />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.9.12.1 &#10;Updated read survey file to interpret units if present in the second line." />
+    <MESSAGE value="v0.9.12.2&#10;Updated read survey file to add a MD=0 line at the beginning if not present." />
+    <MESSAGE value="v0.9.13&#10;Generic survey calculations such as closure, departure, and section." />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.9.13&#10;Generic survey calculations such as closure, departure, and section." />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Data/survey_mcm.csv" />
-    <entry file="file://$PROJECT_DIR$/Data/edgar-out_asc.csv" />
-    <entry file="file://$PROJECT_DIR$/Data/edgar-out_mcm.csv" />
-    <entry file="file://$PROJECT_DIR$/Data/edgar-in_asc.csv" />
     <entry file="file://$PROJECT_DIR$/Data/edgar-in.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -756,21 +764,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="549">
-          <caret line="120" column="45" selection-start-line="120" selection-start-column="45" selection-end-line="120" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#75#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Data/594survey.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3482" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Survey/AdvancedSplineCurve.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
@@ -792,13 +785,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Survey/MinimumCurvature.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/trajectory.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
@@ -806,32 +792,90 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Utilities/readfromfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="73" column="17" lean-forward="true" selection-start-line="73" selection-start-column="17" selection-end-line="73" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Survey/MinimumCurvature.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Survey/BalancedTangential.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="43" column="24" lean-forward="true" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="667">
+          <caret line="29" column="71" lean-forward="true" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="71" />
+          <folding>
+            <element signature="e#0#75#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utilities/mylogging.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+          <folding>
+            <element signature="e#132#146#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Survey/AverageAngle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1012">
+          <caret line="44" column="40" lean-forward="true" selection-start-line="44" selection-start-column="40" selection-end-line="45" selection-end-column="98" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Data/594survey.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="120" selection-start-line="120" selection-end-line="121" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Survey/Tangential.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="18" column="35" lean-forward="true" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
+        <state relative-caret-position="455">
+          <caret line="49" selection-start-line="3" selection-end-line="49" />
           <folding>
-            <marker date="1539808586360" expanded="true" signature="811:812" ph="..." />
+            <marker date="1539810055390" expanded="true" signature="1154:1155" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+        <state relative-caret-position="317">
+          <caret line="25" selection-start-line="25" selection-end-line="25" selection-end-column="45" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utilities/readfromfile.py">
+    <entry file="file://$PROJECT_DIR$/Survey/VectorAverage.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="72" column="8" lean-forward="true" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="20" />
+        <state relative-caret-position="-5">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
           <folding>
-            <element signature="e#0#55#0" expanded="true" />
+            <marker date="1539811025686" expanded="true" signature="1358:1685" ph="..." />
           </folding>
         </state>
       </provider>
