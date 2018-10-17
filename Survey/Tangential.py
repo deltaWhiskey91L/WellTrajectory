@@ -38,7 +38,8 @@ def next_pt(md2, inc2, azi2):
     :type inc2: list
     :param azi2: azimuth of the two points, azi (rad)
     :type azi2: list
-    :return:
+    :return: change in position [dv, dn, de]
+    :rtype: list
     """
 
     dm = md2[1] - md2[0]

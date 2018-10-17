@@ -18,12 +18,13 @@ def survey(md, inc, azi):
     inc = np.radians(np.array(inc))
     azi = np.radians(np.array(azi))
 
-    tvd, north, east = list([0]), list([0]), list([0])
+    tvd, north, east, dls = list([0]), list([0]), list([0]), list([0])
     for i in range(1, len(md)):
-        dv, dn, de = next_pt([md[i - 1], md[i]], [inc[i - 1], inc[i]], [azi[i - 1], azi[i]])
+        dv, dn, de, dls_current = next_pt([md[i - 1], md[i]], [inc[i - 1], inc[i]], [azi[i - 1], azi[i]])
         tvd.append(tvd[i - 1] + dv)
         north.append(north[i - 1] + dn)
         east.append(east[i - 1] + de)
+        dls.append(dls_current)
 
     return tvd, north, east
 
@@ -38,7 +39,7 @@ def next_pt(md2, inc2, azi2):
     :type inc2: list
     :param azi2: azimuth of the two points, azi (rad)
     :type azi2: list
-    :return: change in position [dv, dn, de]
+    :return: change in position [dv, dn, de, dls]
     :rtype: list
     """
 
@@ -46,8 +47,12 @@ def next_pt(md2, inc2, azi2):
     wA = unit_vector(inc2[0], azi2[0])
     wB = unit_vector(inc2[0], azi2[0])
 
-    dP = dm * (wA + wB) / np.linalg.norm(wA + wB)
-    return dP[0], dP[1], dP[2]
+    alpha = np.arccos(np.dot(wA, wB)) / 2
+    r = dm / (2 * alpha)
+    dc = 2 * r * np.sin(alpha)
+
+    dP = dc * (wA + wB) / np.linalg.norm(wA + wB)
+    return dP[0], dP[1], dP[2], 100 / r
 
 
 def unit_vector(inc, azi):
