@@ -1,4 +1,0 @@
-Name,Unit,Magnitude,Distribution
-md,m,0.35,Normal
-inc,dega,0.15,Normal
-azi,dega,0.25,Normal

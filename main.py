@@ -87,7 +87,7 @@ def montecarlo_generation(file='hrcg.csv'):
 
 
 def synthetic_well():
-    from Survey import Synthetic
+    import Synthetic
     import matplotlib as mpl
     from mpl_toolkits.mplot3d import Axes3D
 
