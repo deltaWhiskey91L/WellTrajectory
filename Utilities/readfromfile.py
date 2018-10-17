@@ -69,6 +69,11 @@ def survey(file=root_path + '/Data/original_survey.csv'):
     for line in lines:
         md.append(float(line[0])), inc.append(float(line[1])), azi.append(float(line[2]))
 
+    if md[0] != 0:
+        md.insert(0, 0)
+        inc.insert(0, 0)
+        azi.insert(0, azi[0])
+
     if unit_list is not None:
         md = units.from_to(md, unit_list[0], 'ft')
         inc = units.from_to(inc, unit_list[1], 'dega')
