@@ -1,6 +1,6 @@
 from Utilities import mylogging, writetofile as write, readfromfile as read
 import montecarlo
-from Survey import trajectory
+from SurveyCalculationMethods import trajectory
 import numpy as np
 import os
 
@@ -140,14 +140,32 @@ def synthetic_well():
 if __name__ == '__main__':
     __init__()
 
-    trajectory.tangential('594survey', target_azimuth=-158)
-    trajectory.balanced_tangential('594survey', target_azimuth=-158)
-    trajectory.average_angle('594survey', target_azimuth=-158)
-    trajectory.vector_average('594survey', target_azimuth=-158)
-    trajectory.minimum_curvature('594survey', target_azimuth=-158)
-    trajectory.minimum_curvature2('594survey', target_azimuth=-158)
-    trajectory.radii_of_curvature('594survey', target_azimuth=-158)
-    trajectory.advanced_splines('594survey', target_azimuth=-158)
+    target = -158
+
+    from SurveyCalculationMethods import Generic
+    survey = Generic.Survey('594survey')
+    # trajectory.tangential('594survey', target_azimuth=-158)
+    # trajectory.balanced_tangential('594survey', target_azimuth=-158)
+    trajectory.average_angle(survey, target)
+    # trajectory.vector_average('594survey', target_azimuth=-158)
+    # trajectory.minimum_curvature('594survey', target_azimuth=-158)
+    # trajectory.minimum_curvature2('594survey', target_azimuth=-158)
+    # trajectory.radii_of_curvature('594survey', target_azimuth=-158)
+    # trajectory.advanced_splines('594survey', target_azimuth=-158)
+    import sys
+    sys.exit()
+    print(__root_path)
+    tan = read.complete_survey(__root_path + '/Results/594survey_Tangential.csv')
+    baltan = read.complete_survey(__root_path + '/Results/594survey_BalancedTangential.csv')
+    avgang = read.complete_survey(__root_path + '/Results/594survey_AverageAngle.csv')
+    vecavg = read.complete_survey(__root_path + '/Results/594survey_VectorAverage.csv')
+    mcm = read.complete_survey(__root_path + '/Results/594survey_MinimumCurvature2.csv')
+    radii = read.complete_survey(__root_path + '/Results/594survey_RadiiOfCurvature.csv')
+    asc = read.complete_survey(__root_path + '/Results/594survey_AdvancedSplines.csv')
+
+    wellplot.plot_vertical_section(tan, target_azimuth=target, label='Tangential')
+    wellplot.plot_horizontal_section(tan, label='Tangential')
+    plt.show()
 
     print("We'll meet again.")
     mylogging.runlog.info("End: We'll meet again.")

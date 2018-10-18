@@ -1,5 +1,55 @@
+from Utilities import mylogging, unitconverter as units
+import csv
 import math
 import numpy as np
+import os
+
+
+class Survey:
+    def __init__(self, file_name, path=None, location=(0, 0)):
+        """
+        :param file_name: survey file name
+        :type file_name: str
+        :param path: survey file root path
+        :type path: str
+        :param location: wellhead local [north, east] position
+        :type location: list
+        """
+        if path is None:
+            path = os.path.dirname(os.path.dirname(__file__)) + '/Data/'
+
+        self.name = file_name
+        self.file = path + self.name + '.csv'
+        self.location = location
+
+        from Utilities import readfromfile as read
+        md, inc, azi = read.survey(self.file)
+
+        self.MD = np.array(md)
+        self.Inc = np.array(inc)
+        self.Azi = np.array(azi)
+
+
+class SurveyMethod:
+    def __init__(self, survey, target=None):
+        self.method = None
+        self.name = survey.name
+        if target < 0:
+            target = target + 360
+        self.Target = target
+        self.MD = survey.MD
+        self.Inc = survey.Inc
+        self.Azi = survey.Azi
+        self.TVD = None
+        self.North = None
+        self.East = None
+        self.Closure = None
+        self.Departure = None
+        self.Section = None
+        self.DLS = None
+        self.Build = None
+        self.Turn = None
+        self.Rugosity = None
 
 
 def closure_azimuth(north, east):

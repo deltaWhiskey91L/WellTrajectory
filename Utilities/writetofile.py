@@ -5,6 +5,30 @@ import os
 root_path = os.path.dirname(os.path.dirname(__file__))
 
 
+def object_csv(survey):
+    """
+    Writes complete survey to file
+    :param survey: SurveyMethod object
+    """
+
+    mylogging.runlog.info('Write: Writing the survey to .csv.')
+    file = root_path + '/Results/{0}_{1}.csv'.format(survey.name, survey.method)
+
+    header = ['MD,Inc,Azi,TVD,North,East,Closure,Departure,Section,DLS,Build,Turn,Target\n',
+              'ft,dega,dega,ft,ft,ft,dega,ft,ft,dega/100ft,dega/100ft,dega/100ft,dega\n']
+
+    f = open(file, 'w')
+    f.writelines(header)
+
+    for i in range(len(survey.MD)):
+        line = [str(survey.MD[i]) + ',' + str(survey.Inc[i]) + ',' + str(survey.Azi[i]) + ',' + str(survey.TVD[i]) + ','
+                + str(survey.North[i]) + ',' + str(survey.East[i]) + ',' + str(survey.Closure[i]) + ','
+                + str(survey.Departure[i]) + ',' + str(survey.Section[i]) + ',' + str(survey.DLS[i]) + ','
+                + str(survey.Build[i]) + ',' + str(survey.Turn[i]) + ',' + str(survey.Target) +'\n']
+        f.writelines(line)
+    f.close()
+
+
 def survey_csv(survey, name=None, method='mcm', iteration=None):
     if iteration is not None:
         mylogging.runlog.info('Write: Writing the {0} survey to .csv.'.format(iteration))

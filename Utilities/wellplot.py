@@ -9,8 +9,7 @@ def plot_horizontal_section(survey_list, size=None, label=None, color=None, mont
         size = len(survey_list)
 
     if size == 1:
-        pass
-        # plt.plot(survey_list.EW.values, survey_list.NS.values)
+        plt.plot(survey_list.EW.values, survey_list.NS.values)
     else:
         if montecarlo is True:
             for i in range(0, size):

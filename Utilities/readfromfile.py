@@ -2,6 +2,7 @@ from Utilities import mylogging, unitconverter as units
 import csv
 import os
 
+
 try:
     import pandas as pd
 except ModuleNotFoundError:
@@ -14,43 +15,21 @@ else:
 root_path = os.path.dirname(os.path.realpath(__file__))
 
 
-def complete_survey(file=root_path + '/Data/original_survey.csv', return_dataframe=False):
+def complete_survey(file=root_path + '/Data/original_survey.csv'):
     mylogging.runlog.info('Read: Survey File')
-    if __pandas is True:
-        try:
-            df = pd.read_csv(file, delimiter=',', header=0, dtype=float)
-        except FileNotFoundError:
-            mylogging.runlog.error('Read: {0} file not found.'.format(file))
-            raise FileNotFoundError
-        except Exception:
-            mylogging.runlog.error('Read: Error reading {0} file.'.format(file))
-            raise ValueError
-        if return_dataframe is True:
-            return df
+    with open(file, 'r') as f:
+        reader = csv.reader(f)
+        lines = list(reader)
+    lines.pop(0)
+    lines.pop(0)
 
-        md = df.MD.values
-        tvd = df.TVD.values
-        ns = df.NS.values
-        ew = df.EW.values
-        section = df.Section.values
-        dls = df.DLS.values
-        build = df.Build.values
-        turn = df.Turn.values
-        rugosity = df.Rugosity.values
-        return md, tvd, ns, ew, section, dls, build, turn, rugosity
-    else:
-        with open(file, 'r') as f:
-            reader = csv.reader(f)
-            lines = list(reader)
-        lines.pop(0)
-
-        md, tvd, ns, ew, section = list(), list(), list(), list(), list()
-        dls, build, turn, rugosity = list(), list(), list(), list()
-        for line in lines:
-            md.append(float(line[0])), tvd.append(float(line[3])), ns.append(float(line[4])), ew.append(float(line[5]))
-            section.append(float(line[6])), dls.append(float(line[7])), build.append(float(line[8]))
-            turn.append(float(line[9])), rugosity.append(float(line[10]))
-        return md, tvd, ns, ew, section, dls, build, turn, rugosity
+    md, tvd, ns, ew, closure, departure = list(), list(), list(), list(), list(), list()
+    section, dls = list(), list()
+    for line in lines:
+        md.append(float(line[0])), tvd.append(float(line[3])), ns.append(float(line[4])), ew.append(float(line[5]))
+        closure.append(float(line[6])), departure.append(float(line[7])), section.append(float(line[7])), \
+        dls.append(float(line[8]))
+    return md, tvd, ns, ew, closure, departure, section, dls
 
 
 def survey(file=root_path + '/Data/original_survey.csv'):
