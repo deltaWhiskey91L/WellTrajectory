@@ -140,13 +140,13 @@ def synthetic_well():
 if __name__ == '__main__':
     __init__()
 
-    target = -158
-
     from SurveyCalculationMethods import Generic
     survey = Generic.Survey('594survey')
+    target = -158
+
     # trajectory.tangential('594survey', target_azimuth=-158)
     # trajectory.balanced_tangential('594survey', target_azimuth=-158)
-    trajectory.average_angle(survey, target)
+    trajectory.average_angle(survey, target, rnd=True)
     # trajectory.vector_average('594survey', target_azimuth=-158)
     # trajectory.minimum_curvature('594survey', target_azimuth=-158)
     # trajectory.minimum_curvature2('594survey', target_azimuth=-158)

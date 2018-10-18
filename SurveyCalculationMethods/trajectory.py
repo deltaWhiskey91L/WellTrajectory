@@ -7,303 +7,262 @@ import os
 root_path = os.path.dirname(os.path.dirname(__file__))
 
 
-def average_angle(survey_object, target=None):
+def average_angle(survey_object, target=None, rnd=False):
     """
     Survey calculations using the Average Angle Method and writes results to .csv file.
 
     :param survey_object: survey class object
     :param target: target azimuth
     :type target: float
+    :param rnd: round to nearest 100th
+    :type rnd: bool
     """
     from SurveyCalculationMethods import AverageAngle
 
     mylogging.runlog.info('Survey: Calculate survey for {0} using the Average Angle method.'.format(survey_object.name))
-    Calculation = Generic.SurveyMethod(survey_object, target)
-    Calculation.name = survey_object.name
-    Calculation.method = 'AverageAngletest'
+    surv = Generic.SurveyMethod(survey_object, target)
+    surv.name = survey_object.name
+    surv.method = 'AverageAngle'
 
-    Calculation.TVD, Calculation.North, Calculation.East \
-        = AverageAngle.survey(Calculation.MD, np.radians(Calculation.Inc), np.radians(Calculation.Azi))
+    surv.tvd, surv.north, surv.east \
+        = AverageAngle.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi))
 
-    if Calculation.Target is None:
-        Calculation.Target = closure_azimuth(Calculation.North[-1], Calculation.East[-1])
+    if surv.target is None:
+        surv.target = closure_azimuth(surv.north[-1], surv.east[-1])
 
     if survey_object.location is not None:
-        Calculation.North = np.add(Calculation.North, survey_object.location[0])
-        Calculation.East = np.add(Calculation.East, survey_object.location[1])
+        surv.north = np.add(surv.north, survey_object.location[0])
+        surv.east = np.add(surv.east, survey_object.location[1])
 
-    Calculation.Closure = closure_azimuth(Calculation.North, Calculation.East)
-    Calculation.Departure = closure_departure(Calculation.North, Calculation.East)
-    Calculation.Section = vertical_section(Calculation.North, Calculation.East, Calculation.Target)
-    Calculation.DLS = np.zeros(len(Calculation.MD)) * np.nan
-    Calculation.Build = np.zeros(len(Calculation.MD)) * np.nan
-    Calculation.Turn = np.zeros(len(Calculation.MD)) * np.nan
-    write.object_csv(Calculation)
+    surv.closure = closure_azimuth(surv.north, surv.east)
+    surv.departure = closure_departure(surv.north, surv.east)
+    surv.section = vertical_section(surv.north, surv.east, surv.target)
+    surv.dls = np.zeros(len(surv.md)) * np.nan
+    surv.build = np.zeros(len(surv.md)) * np.nan
+    surv.turn = np.zeros(len(surv.md)) * np.nan
+    surv.rugosity = np.zeros(len(surv.md)) * np.nan
+    write.object_csv(surv, rnd=rnd)
+    return surv
 
 
-def tangential(name, target_azimuth=None, wellhead_location=None, file_path=None):
+def tangential(survey_object, target=None, rnd=False):
     """
     Survey calculations using the Tangential Method and writes results to .csv file.
 
-    :param name: survey file name
-    :type name: str
-    :param file_path: survey file root path
-    :type file_path: str
-    :param target_azimuth: target azimuth (dega), if None, then last survey location
-    :type target_azimuth: float
-    :param wellhead_location: wellhead local [north, east] position
-    :type wellhead_location: list
+    :param survey_object: survey class object
+    :param target: target azimuth
+    :type target: float
+    :param rnd: round to nearest 100th
+    :type rnd: bool
     """
     from SurveyCalculationMethods import Tangential
 
-    mylogging.runlog.info('Survey: Calculate survey for {0} using the Average Angle method.'.format(name))
-    if file_path is None:
-        file_path = root_path + '/Data/'
-    file = file_path + name + '.csv'
+    mylogging.runlog.info('Survey: Calculate survey for {0} using the Tangential method.'.format(survey_object.name))
+    surv = Generic.SurveyMethod(survey_object, target)
+    surv.name = survey_object.name
+    surv.method = 'Tangential'
 
-    md, inc, azi = read.survey(file)
-    tvd, north, east = Tangential.survey(md, inc, azi)
+    surv.tvd, surv.north, surv.east \
+        = Tangential.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi))
 
-    if target_azimuth is None:
-        target_azimuth = closure_azimuth(north[-1], east[-1])
+    if surv.target is None:
+        surv.target = closure_azimuth(surv.north[-1], surv.east[-1])
 
-    if wellhead_location is not None:
-        north = [north[i] + wellhead_location[0] for i in range(len(north))]
-        east = [east[i] + wellhead_location[1] for i in range(len(east))]
+    if survey_object.location is not None:
+        surv.north = np.add(surv.north, survey_object.location[0])
+        surv.east = np.add(surv.east, survey_object.location[1])
 
-    dls = list()
-    [dls.append(np.nan) for element in tvd]
-    closure = [closure_azimuth(north[i], east[i]) for i in range(len(north))]
-    departure = [closure_departure(north[i], east[i]) for i in range(len(north))]
-    section = [vertical_section(north[i], east[i], target_azimuth) for i in range(len(north))]
-    write.survey_csv([md, inc, azi, tvd, north, east, closure, departure, section, dls], name=name, method='Tangential')
+    surv.closure = closure_azimuth(surv.north, surv.east)
+    surv.departure = closure_departure(surv.north, surv.east)
+    surv.section = vertical_section(surv.north, surv.east, surv.target)
+    surv.dls = np.zeros(len(surv.md)) * np.nan
+    surv.build = np.zeros(len(surv.md)) * np.nan
+    surv.turn = np.zeros(len(surv.md)) * np.nan
+    surv.rugosity = np.zeros(len(surv.md)) * np.nan
+    write.object_csv(surv, rnd=rnd)
+    return surv
 
 
-def balanced_tangential(name, target_azimuth=None, wellhead_location=None, file_path=None):
+def balanced_tangential(survey_object, target=None, rnd=False):
     """
     Survey calculations using the Balanced Tangential Method and writes results to .csv file.
 
-    :param name: survey file name
-    :type name: str
-    :param file_path: survey file root path
-    :type file_path: str
-    :param target_azimuth: target azimuth (dega), if None, then last survey location
-    :type target_azimuth: float
-    :param wellhead_location: wellhead local [north, east] position
-    :type wellhead_location: list
+    :param survey_object: survey class object
+    :param target: target azimuth
+    :type target: float
+    :param rnd: round to nearest 100th
+    :type rnd: bool
     """
     from SurveyCalculationMethods import BalancedTangential
 
-    mylogging.runlog.info('Survey: Calculate survey for {0} using the Average Angle method.'.format(name))
-    if file_path is None:
-        file_path = root_path + '/Data/'
-    file = file_path + name + '.csv'
+    mylogging.runlog.info('Survey: Calculate survey for {0} using the Balanced Tangential method.'.format(survey_object.name))
+    surv = Generic.SurveyMethod(survey_object, target)
+    surv.name = survey_object.name
+    surv.method = 'BalancedTangential'
 
-    md, inc, azi = read.survey(file)
-    tvd, north, east = BalancedTangential.survey(md, inc, azi)
+    surv.tvd, surv.north, surv.east \
+        = BalancedTangential.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi))
 
-    if target_azimuth is None:
-        target_azimuth = closure_azimuth(north[-1], east[-1])
+    if surv.target is None:
+        surv.target = closure_azimuth(surv.north[-1], surv.east[-1])
 
-    if wellhead_location is not None:
-        north = [north[i] + wellhead_location[0] for i in range(len(north))]
-        east = [east[i] + wellhead_location[1] for i in range(len(east))]
+    if survey_object.location is not None:
+        surv.north = np.add(surv.north, survey_object.location[0])
+        surv.east = np.add(surv.east, survey_object.location[1])
 
-    dls = list()
-    [dls.append(np.nan) for element in tvd]
-    closure = [closure_azimuth(north[i], east[i]) for i in range(len(north))]
-    departure = [closure_departure(north[i], east[i]) for i in range(len(north))]
-    section = [vertical_section(north[i], east[i], target_azimuth) for i in range(len(north))]
-    write.survey_csv([md, inc, azi, tvd, north, east, closure, departure, section, dls], name=name, method='BalancedTangential')
+    surv.closure = closure_azimuth(surv.north, surv.east)
+    surv.departure = closure_departure(surv.north, surv.east)
+    surv.section = vertical_section(surv.north, surv.east, surv.target)
+    surv.dls = np.zeros(len(surv.md)) * np.nan
+    surv.build = np.zeros(len(surv.md)) * np.nan
+    surv.turn = np.zeros(len(surv.md)) * np.nan
+    surv.rugosity = np.zeros(len(surv.md)) * np.nan
+    write.object_csv(surv, rnd=rnd)
+    return surv
 
 
-def vector_average(name, target_azimuth=None, wellhead_location=None, file_path=None):
+def vector_average(survey_object, target=None, rnd=False):
     """
     Survey calculations using the Vector Average Method and writes results to .csv file.
 
-    :param name: survey file name
-    :type name: str
-    :param file_path: survey file root path
-    :type file_path: str
-    :param target_azimuth: target azimuth (dega), if None, then last survey location
-    :type target_azimuth: float
-    :param wellhead_location: wellhead local [north, east] position
-    :type wellhead_location: list
+    :param survey_object: survey class object
+    :param target: target azimuth
+    :type target: float
+    :param rnd: round to nearest 100th
+    :type rnd: bool
     """
     from SurveyCalculationMethods import VectorAverage
 
-    mylogging.runlog.info('Survey: Calculate survey for {0} using the Average Angle method.'.format(name))
-    if file_path is None:
-        file_path = root_path + '/Data/'
-    file = file_path + name + '.csv'
+    mylogging.runlog.info('Survey: Calculate survey for {0} using the Vector Average method.'.format(survey_object.name))
+    surv = Generic.SurveyMethod(survey_object, target)
+    surv.name = survey_object.name
+    surv.method = 'VectorAverage'
 
-    md, inc, azi = read.survey(file)
-    tvd, north, east = VectorAverage.survey(md, inc, azi)
+    surv.tvd, surv.north, surv.east \
+        = VectorAverage.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi))
 
-    if target_azimuth is None:
-        target_azimuth = closure_azimuth(north[-1], east[-1])
+    if surv.target is None:
+        surv.target = closure_azimuth(surv.north[-1], surv.east[-1])
 
-    if wellhead_location is not None:
-        north = [north[i] + wellhead_location[0] for i in range(len(north))]
-        east = [east[i] + wellhead_location[1] for i in range(len(east))]
+    if survey_object.location is not None:
+        surv.north = np.add(surv.north, survey_object.location[0])
+        surv.east = np.add(surv.east, survey_object.location[1])
 
-    dls = list()
-    [dls.append(np.nan) for element in tvd]
-    closure = [closure_azimuth(north[i], east[i]) for i in range(len(north))]
-    departure = [closure_departure(north[i], east[i]) for i in range(len(north))]
-    section = [vertical_section(north[i], east[i], target_azimuth) for i in range(len(north))]
-    write.survey_csv([md, inc, azi, tvd, north, east, closure, departure, section, dls], name=name, method='VectorAverage')
+    surv.closure = closure_azimuth(surv.north, surv.east)
+    surv.departure = closure_departure(surv.north, surv.east)
+    surv.section = vertical_section(surv.north, surv.east, surv.target)
+    surv.dls = np.zeros(len(surv.md)) * np.nan
+    surv.build = np.zeros(len(surv.md)) * np.nan
+    surv.turn = np.zeros(len(surv.md)) * np.nan
+    surv.rugosity = np.zeros(len(surv.md)) * np.nan
+    write.object_csv(surv, rnd=rnd)
+    return surv
 
 
-def radii_of_curvature(name, target_azimuth=None, wellhead_location=None, file_path=None):
+def radii_of_curvature(survey_object, target=None, rnd=False):
     """
-    Survey calculations using the Radii of Curvature Method and writes results to .csv file.
+    Survey calculations using the Radius of Curvature Method and writes results to .csv file.
 
-    :param name: survey file name
-    :type name: str
-    :param file_path: survey file root path
-    :type file_path: str
-    :param target_azimuth: target azimuth (dega), if None, then last survey location
-    :type target_azimuth: float
-    :param wellhead_location: wellhead local [north, east] position
-    :type wellhead_location: list
+    :param survey_object: survey class object
+    :param target: target azimuth
+    :type target: float
+    :param rnd: round to nearest 100th
+    :type rnd: bool
     """
     from SurveyCalculationMethods import RadiiOfCurvature
 
-    mylogging.runlog.info('Survey: Calculate survey for {0} using the Average Angle method.'.format(name))
-    if file_path is None:
-        file_path = root_path + '/Data/'
-    file = file_path + name + '.csv'
+    mylogging.runlog.info('Survey: Calculate survey for {0} using the Radius of Curvature method.'.format(survey_object.name))
+    surv = Generic.SurveyMethod(survey_object, target)
+    surv.name = survey_object.name
+    surv.method = 'RadiusOfCurvature'
 
-    md, inc, azi = read.survey(file)
-    tvd, north, east, dls = RadiiOfCurvature.survey(md, inc, azi)
+    surv.tvd, surv.north, surv.east, surv.dls, surv.build, surv.turn \
+        = RadiiOfCurvature.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi))
 
-    if target_azimuth is None:
-        target_azimuth = closure_azimuth(north[-1], east[-1])
+    if surv.target is None:
+        surv.target = closure_azimuth(surv.north[-1], surv.east[-1])
 
-    if wellhead_location is not None:
-        north = [north[i] + wellhead_location[0] for i in range(len(north))]
-        east = [east[i] + wellhead_location[1] for i in range(len(east))]
+    if survey_object.location is not None:
+        surv.north = np.add(surv.north, survey_object.location[0])
+        surv.east = np.add(surv.east, survey_object.location[1])
 
-    closure = [closure_azimuth(north[i], east[i]) for i in range(len(north))]
-    departure = [closure_departure(north[i], east[i]) for i in range(len(north))]
-    section = [vertical_section(north[i], east[i], target_azimuth) for i in range(len(north))]
+    surv.closure = closure_azimuth(surv.north, surv.east)
+    surv.departure = closure_departure(surv.north, surv.east)
+    surv.section = vertical_section(surv.north, surv.east, surv.target)
+    surv.rugosity = np.zeros(len(surv.md)) * np.nan
+    write.object_csv(surv, rnd=rnd)
+    return surv
 
-    write.survey_csv([md, inc, azi, tvd, north, east, closure, departure, section, dls], name=name, method='RadiiOfCurvature')
 
-
-def minimum_curvature(name, target_azimuth=None, wellhead_location=None, file_path=None):
+def minimum_curvature(survey_object, target=None, rnd=False):
     """
     Survey calculations using the Minimum Curvature Method and writes results to .csv file.
 
-    :param name: survey file name
-    :type name: str
-    :param file_path: survey file root path
-    :type file_path: str
-    :param target_azimuth: target azimuth (dega), if None, then last survey location
-    :type target_azimuth: float
-    :param wellhead_location: wellhead local [north, east] position
-    :type wellhead_location: list
-    """
-    from SurveyCalculationMethods import MinimumCurvature
-
-    mylogging.runlog.info('Survey: Calculate survey for {0} using the Average Angle method.'.format(name))
-    if file_path is None:
-        file_path = root_path + '/Data/'
-    file = file_path + name + '.csv'
-
-    md, inc, azi = read.survey(file)
-    tvd, north, east, dls = MinimumCurvature.survey(md, inc, azi)
-
-    if target_azimuth is None:
-        target_azimuth = closure_azimuth(north[-1], east[-1])
-
-    if wellhead_location is not None:
-        north = [north[i] + wellhead_location[0] for i in range(len(north))]
-        east = [east[i] + wellhead_location[1] for i in range(len(east))]
-
-    closure = [closure_azimuth(north[i], east[i]) for i in range(len(north))]
-    departure = [closure_departure(north[i], east[i]) for i in range(len(north))]
-    section = [vertical_section(north[i], east[i], target_azimuth) for i in range(len(north))]
-
-    write.survey_csv([md, inc, azi, tvd, north, east, closure, departure, section, dls], name=name,
-                     method='MinimumCurvature')
-
-
-def minimum_curvature2(name, target_azimuth=None, wellhead_location=None, file_path=None):
-    """
-    Survey calculations using the Minimum Curvature Method and writes results to .csv file.
-
-    :param name: survey file name
-    :type name: str
-    :param file_path: survey file root path
-    :type file_path: str
-    :param target_azimuth: target azimuth (dega), if None, then last survey location
-    :type target_azimuth: float
-    :param wellhead_location: wellhead local [north, east] position
-    :type wellhead_location: list
+    :param survey_object: survey class object
+    :param target: target azimuth
+    :type target: float
+    :param rnd: round to nearest 100th
+    :type rnd: bool
     """
     from SurveyCalculationMethods import MinimumCurvature2
 
-    mylogging.runlog.info('Survey: Calculate survey for {0} using the Average Angle method.'.format(name))
-    if file_path is None:
-        file_path = root_path + '/Data/'
-    file = file_path + name + '.csv'
+    mylogging.runlog.info('Survey: Calculate survey for {0} using the Minimum Curvature method.'.format(survey_object.name))
+    surv = Generic.SurveyMethod(survey_object, target)
+    surv.name = survey_object.name
+    surv.method = 'MinimumCurvature'
 
-    md, inc, azi = read.survey(file)
-    tvd, north, east, dls = MinimumCurvature2.survey(md, inc, azi)
+    surv.tvd, surv.north, surv.east, surv.dls,  surv.build,  surv.turn \
+        = MinimumCurvature2.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi))
 
-    if target_azimuth is None:
-        target_azimuth = closure_azimuth(north[-1], east[-1])
+    if surv.target is None:
+        surv.target = closure_azimuth(surv.north[-1], surv.east[-1])
 
-    if wellhead_location is not None:
-        north = [north[i] + wellhead_location[0] for i in range(len(north))]
-        east = [east[i] + wellhead_location[1] for i in range(len(east))]
+    if survey_object.location is not None:
+        surv.north = np.add(surv.north, survey_object.location[0])
+        surv.east = np.add(surv.east, survey_object.location[1])
 
-    closure = [closure_azimuth(north[i], east[i]) for i in range(len(north))]
-    departure = [closure_departure(north[i], east[i]) for i in range(len(north))]
-    section = [vertical_section(north[i], east[i], target_azimuth) for i in range(len(north))]
+    surv.closure = closure_azimuth(surv.north, surv.east)
+    surv.departure = closure_departure(surv.north, surv.east)
+    surv.section = vertical_section(surv.north, surv.east, surv.target)
+    surv.rugosity = np.zeros(len(surv.md)) * np.nan
+    write.object_csv(surv, rnd=rnd)
+    return surv
 
-    write.survey_csv([md, inc, azi, tvd, north, east, closure, departure, section, dls], name=name,
-                     method='MinimumCurvature2')
 
-
-def advanced_splines(name, target_azimuth=None, wellhead_location=None, file_path=None):
+def advanced_splines(survey_object, target=None, rnd=False):
     """
-    Survey calculations using the Minimum Curvature Method and writes results to .csv file.
+    Survey calculations using the Advanced Spline Curve Method and writes results to .csv file.
 
-    :param name: survey file name
-    :type name: str
-    :param file_path: survey file root path
-    :type file_path: str
-    :param target_azimuth: target azimuth (dega), if None, then last survey location
-    :type target_azimuth: float
-    :param wellhead_location: wellhead local [north, east] position
-    :type wellhead_location: list
+    :param survey_object: survey class object
+    :param target: target azimuth
+    :type target: float
+    :param rnd: round to nearest 100th
+    :type rnd: bool
     """
     from SurveyCalculationMethods import AdvancedSplineCurve
 
-    mylogging.runlog.info('Survey: Calculate survey for {0} using the Average Angle method.'.format(name))
-    if file_path is None:
-        file_path = root_path + '/Data/'
-    file = file_path + name + '.csv'
+    mylogging.runlog.info('Survey: Calculate survey for {0} using the Advanced Spline Curve method.'.format(survey_object.name))
+    surv = Generic.SurveyMethod(survey_object, target)
+    surv.name = survey_object.name
+    surv.method = 'AdvancedSplineCurve'
 
-    md, inc, azi = read.survey(file)
-    tvd, north, east, dls = AdvancedSplineCurve.survey(md, inc, azi)
+    surv.tvd, surv.north, surv.east, surv.dls, surv.build, surv.turn, surv.rugosity \
+        = AdvancedSplineCurve.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi))
 
-    if target_azimuth is None:
-        target_azimuth = closure_azimuth(north[-1], east[-1])
+    if surv.target is None:
+        surv.target = closure_azimuth(surv.north[-1], surv.east[-1])
 
-    if wellhead_location is not None:
-        north = [north[i] + wellhead_location[0] for i in range(len(north))]
-        east = [east[i] + wellhead_location[1] for i in range(len(east))]
+    if survey_object.location is not None:
+        surv.north = np.add(surv.north, survey_object.location[0])
+        surv.east = np.add(surv.east, survey_object.location[1])
 
-    closure = [closure_azimuth(north[i], east[i]) for i in range(len(north))]
-    departure = [closure_departure(north[i], east[i]) for i in range(len(north))]
-    section = [vertical_section(north[i], east[i], target_azimuth) for i in range(len(north))]
-
-    write.survey_csv([md, inc, azi, tvd, north, east, closure, departure, section, dls], name=name,
-                     method='AdvancedSplines')
+    surv.closure = closure_azimuth(surv.north, surv.east)
+    surv.departure = closure_departure(surv.north, surv.east)
+    surv.section = vertical_section(surv.north, surv.east, surv.target)
+    surv.build = np.zeros(len(surv.md)) * np.nan
+    surv.turn = np.zeros(len(surv.md)) * np.nan
+    write.object_csv(surv, rnd=rnd)
+    return surv
 
 
 def vertical_section(north, east, target_azimuth):
@@ -368,19 +327,3 @@ def closure_azimuth(north, east):
         else:
             closure[i] = 90 + math.fabs(closure[i])
     return closure
-
-
-def error(md0, md1, tvd0, tvd1, north0, north1, east0, east1):
-    """
-    Calculates the error between HRCG and 100ft surveys
-
-    :return: Cumulative relative error
-    """
-
-    err = 0
-    for i in range(0, len(md1)):
-        for j in range(0, len(md0)):
-            if md0[j] == md1[i]:
-                err += np.sqrt((tvd0[j] - tvd1[i])**2 + (north0[j] - north1[i])**2 + (east0[j] - east1[i])**2)
-
-    return err / len(md1)

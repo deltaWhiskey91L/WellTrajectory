@@ -43,7 +43,8 @@ def survey(md, inc, azi):
     k = curvature(lam, h, z, y_2nd)
     curve = curve_rate(y_2nd, k=k)
     wbr = rugosity(lam, y_2nd, z, k=k)
-    return position[2], position[1], position[0], np.degrees(curve[0]) * 100
+    return position[2], position[1], position[0], np.degrees(curve[0]) * 100, \
+           np.degrees(curve[1]) * 100, np.degrees(curve[2]) * 100, np.degrees(wbr) * 100
 
 
 def trajectory(h, lam, z, n, md):

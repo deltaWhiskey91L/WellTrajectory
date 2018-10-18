@@ -48,7 +48,7 @@ def next_pt(md2, inc2, azi2):
         dP[0] = dm * np.cos(inc2[0])
         dP[1] = dm * np.sin(inc2[0]) * np.cos(azi2[0])
         dP[2] = dm * np.sin(inc2[0]) * np.sin(azi2[0])
-        dls = 0
+        dls, build, turn = 0, 0, 0
     else:
         wA = unit_vector(inc2[0], azi2[0])
         wB = unit_vector(inc2[1], azi2[1])
@@ -57,8 +57,10 @@ def next_pt(md2, inc2, azi2):
         dc = 2 * r * np.sin(alpha)
         dP = dc * (wA + wB) / np.linalg.norm(wA + wB)
         dls = np.degrees(100 / r)
+        build = buildturn_rate(inc2[0], inc2[1], dm)
+        turn = buildturn_rate(azi2[0], azi2[1], dm)
 
-    return dP[0], dP[1], dP[2], dls
+    return dP[0], dP[1], dP[2], dls, build, turn
 
 
 def unit_vector(inc, azi):
@@ -74,3 +76,11 @@ def unit_vector(inc, azi):
     """
 
     return np.array([np.cos(inc), np.sin(inc) * np.cos(azi), np.sin(inc) * np.sin(azi)])
+
+
+def buildturn_rate(angle0, angle1, delta_md):
+    delta_angle = angle1 - angle0
+    if delta_md == 0:
+        return 0
+
+    return np.degrees(delta_angle) * 100 / delta_md

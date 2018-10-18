@@ -5,10 +5,12 @@ import os
 root_path = os.path.dirname(os.path.dirname(__file__))
 
 
-def object_csv(survey):
+def object_csv(survey, rnd=False):
     """
     Writes complete survey to file
     :param survey: SurveyMethod object
+    :param rnd: round to nearest 100th
+    :type rnd: bool
     """
 
     mylogging.runlog.info('Write: Writing the survey to .csv.')
@@ -17,14 +19,24 @@ def object_csv(survey):
     header = ['MD,Inc,Azi,TVD,North,East,Closure,Departure,Section,DLS,Build,Turn,Target\n',
               'ft,dega,dega,ft,ft,ft,dega,ft,ft,dega/100ft,dega/100ft,dega/100ft,dega\n']
 
+    if rnd is True:
+        md, inc, azi = np.round(survey.MD, 2), np.round(survey.Inc, 2), np.round(survey.Azi, 2)
+        tvd, ns, ew = np.round(survey.TVD, 2), np.round(survey.North, 2), np.round(survey.East, 2)
+        closure, departure = np.round(survey.Closure, 2), np.round(survey.Departure, 2)
+        section = np.round(survey.Section, 2)
+        dls, build, turn = np.round(survey.DLS, 2), np.round(survey.Build, 2), np.round(survey.Turn, 2)
+    else:
+        md, inc, azi, tvd, ns, ew = survey.MD, survey.Inc, survey.Azi, survey.TVD, survey.North, survey.East
+        closure, departure, section = survey.Closure, survey.Departure, survey.Section
+        dls, build, turn = survey.DLS, survey.Build, survey.Turn
+
     f = open(file, 'w')
     f.writelines(header)
-
     for i in range(len(survey.MD)):
-        line = [str(survey.MD[i]) + ',' + str(survey.Inc[i]) + ',' + str(survey.Azi[i]) + ',' + str(survey.TVD[i]) + ','
-                + str(survey.North[i]) + ',' + str(survey.East[i]) + ',' + str(survey.Closure[i]) + ','
-                + str(survey.Departure[i]) + ',' + str(survey.Section[i]) + ',' + str(survey.DLS[i]) + ','
-                + str(survey.Build[i]) + ',' + str(survey.Turn[i]) + ',' + str(survey.Target) +'\n']
+        line = [str(md[i]) + ',' + str(inc[i]) + ',' + str(azi[i]) + ',' + str(tvd[i]) + ','
+                + str(ns[i]) + ',' + str(ew[i]) + ',' + str(closure[i]) + ','
+                + str(departure[i]) + ',' + str(section[i]) + ',' + str(dls[i]) + ','
+                + str(build[i]) + ',' + str(turn[i]) + ',' + str(survey.Target) +'\n']
         f.writelines(line)
     f.close()
 

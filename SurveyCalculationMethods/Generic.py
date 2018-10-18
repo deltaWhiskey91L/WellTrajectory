@@ -36,20 +36,20 @@ class SurveyMethod:
         self.name = survey.name
         if target < 0:
             target = target + 360
-        self.Target = target
-        self.MD = survey.MD
-        self.Inc = survey.Inc
-        self.Azi = survey.Azi
-        self.TVD = None
-        self.North = None
-        self.East = None
-        self.Closure = None
-        self.Departure = None
-        self.Section = None
-        self.DLS = None
-        self.Build = None
-        self.Turn = None
-        self.Rugosity = None
+        self.target = target
+        self.md = survey.MD
+        self.inc = survey.Inc
+        self.azi = survey.Azi
+        self.tvd = None
+        self.north = None
+        self.east = None
+        self.closure = None
+        self.departure = None
+        self.section = None
+        self.dls = None
+        self.build = None
+        self.turn = None
+        self.rugosity = None
 
 
 def closure_azimuth(north, east):
