@@ -140,13 +140,13 @@ def synthetic_well():
 if __name__ == '__main__':
     __init__()
 
-    # trajectory.tangential('594survey', target_azimuth=-158)
-    # trajectory.balanced_tangential('594survey', target_azimuth=-158)
-    # trajectory.average_angle('594survey', target_azimuth=-158)
-    # trajectory.vector_average('594survey', target_azimuth=-158)
-    # trajectory.minimum_curvature('594survey', target_azimuth=-158)
-    # trajectory.minimum_curvature2('594survey', target_azimuth=-158)
-    # trajectory.radii_of_curvature('594survey', target_azimuth=-158)
+    trajectory.tangential('594survey', target_azimuth=-158)
+    trajectory.balanced_tangential('594survey', target_azimuth=-158)
+    trajectory.average_angle('594survey', target_azimuth=-158)
+    trajectory.vector_average('594survey', target_azimuth=-158)
+    trajectory.minimum_curvature('594survey', target_azimuth=-158)
+    trajectory.minimum_curvature2('594survey', target_azimuth=-158)
+    trajectory.radii_of_curvature('594survey', target_azimuth=-158)
     trajectory.advanced_splines('594survey', target_azimuth=-158)
 
     print("We'll meet again.")
