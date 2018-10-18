@@ -13,10 +13,8 @@ def survey(md, inc, azi):
     :type azi: list
     :return: east, north, tvd, dls at survey points along the well.
     """
-
-    md = np.array(md)
-    inc = np.radians(np.array(inc))
-    azi = np.radians(np.array(azi))
+    inc = [np.radians(ele) for ele in inc]
+    azi = [np.radians(ele) for ele in azi]
 
     tvd, north, east = list([0]), list([0]), list([0])
     for i in range(1, len(md)):
@@ -44,7 +42,9 @@ def next_pt(md2, inc2, azi2):
 
     dm = md2[1] - md2[0]
     avg_inc = np.average(np.array(inc2))
-    avg_azi = np.arctan((np.sin(azi2[0]) + np.sin(azi2[1])) / (np.cos(azi2[0]) + np.cos(azi2[1])))
+    avg_azi = np.arctan2(np.sin(azi2[0]) + np.sin(azi2[1]), np.cos(azi2[0]) + np.cos(azi2[1]))
+    if avg_azi < 0:
+        avg_azi = 2 * np.pi + avg_azi
 
     dv = dm * np.cos(avg_inc)
     dn = dm * np.sin(avg_inc) * np.cos(avg_azi)

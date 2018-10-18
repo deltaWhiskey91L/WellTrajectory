@@ -14,9 +14,8 @@ def survey(md, inc, azi):
     :return: east, north, tvd, dls at survey points along the well.
     """
 
-    md = np.array(md)
-    inc = np.radians(np.array(inc))
-    azi = np.radians(np.array(azi))
+    inc = [np.radians(ele) for ele in inc]
+    azi = [np.radians(ele) for ele in azi]
 
     tvd, north, east, dls = list([0]), list([0]), list([0]), list([0])
     for i in range(1, len(md)):
@@ -26,7 +25,7 @@ def survey(md, inc, azi):
         east.append(east[i - 1] + de)
         dls.append(dls_current)
 
-    return tvd, north, east
+    return tvd, north, east, dls
 
 
 def next_pt(md2, inc2, azi2):
@@ -44,12 +43,25 @@ def next_pt(md2, inc2, azi2):
     """
 
     dm = md2[1] - md2[0]
-    r_vert = dm / (inc2[1] - inc2[0])
-    dv = r_vert * (np.sin(inc2[1]) - np.sin(inc2[0]))
-    dh = r_vert * (np.cos(inc2[0]) - np.cos(inc2[1]))
-    r_hor = dh / (azi2[1] - azi2[0])
-    dn = r_hor * (np.sin(azi2[1]) - np.sin(azi2[0]))
-    de = r_hor * (np.cos(azi2[0]) - np.cos(azi2[1]))
-    dls = np.sqrt((1 / r_vert) ** 2 + (1 / r_hor) ** 2)
+
+    if inc2[1] == inc2[0]:
+        r_vert = np.infty
+        dv = dm * np.cos(inc2[0])
+        dh = dm * np.sin(inc2[0])
+    else:
+        r_vert = dm / (inc2[1] - inc2[0])
+        dv = r_vert * (np.sin(inc2[1]) - np.sin(inc2[0]))
+        dh = r_vert * (np.cos(inc2[0]) - np.cos(inc2[1]))
+
+    if azi2[0] == azi2[1]:
+        r_hor = np.infty
+        dn = dh * np.cos(azi2[0])
+        de = dh * np.sin(azi2[0])
+    else:
+        r_hor = dh / (azi2[1] - azi2[0])
+        dn = r_hor * (np.sin(azi2[1]) - np.sin(azi2[0]))
+        de = r_hor * (np.cos(azi2[0]) - np.cos(azi2[1]))
+
+    dls = np.degrees(100 * np.sqrt((1 / r_vert) ** 2 + (1 / r_hor) ** 2))
 
     return dv, dn, de, dls

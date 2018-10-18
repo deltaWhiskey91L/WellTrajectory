@@ -1,7 +1,7 @@
 import logging
 import numpy as np
 import numpy.random as nprand
-import trajectory as Survey
+from Survey import trajectory as Survey
 from Utilities import unitconverter as units, readfromfile as read
 import os
 

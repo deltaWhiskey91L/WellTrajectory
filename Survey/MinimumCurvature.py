@@ -14,19 +14,19 @@ def survey(md, inc, azi):
     :return: east, north, tvd, dls at survey points along the well.
     """
 
-    tvd, north, east, dls, build, turn = list([0]), list([0]), list([0]), list([0]), list([0]), list([0])
-    rugosity = list(np.zeros(len(md)) * np.nan)
+    inc = [np.radians(ele) for ele in inc]
+    azi = [np.radians(ele) for ele in azi]
+
+    tvd, north, east, dls = list([0]), list([0]), list([0]), list([0])
 
     for i in range(1, len(md)):
         next_point = next_pt(md[i] - md[i - 1], [inc[i - 1], inc[i]], [azi[i - 1], azi[i]])
-        build.append(buildturn_rate(inc[i - 1], inc[i], md[i] - md[i - 1]))
-        turn.append(buildturn_rate(azi[i - 1], azi[i], md[i] - md[i - 1]))
         tvd.append(tvd[i - 1] + next_point[0])
         north.append(north[i - 1] + next_point[1])
         east.append(east[i - 1] + next_point[2])
         dls.append(next_point[3])
 
-    return east, north, tvd, dls, build, turn, rugosity
+    return tvd, north, east, dls
 
 
 def next_pt(delta_md, inc, azi, tolerance=1e-10):

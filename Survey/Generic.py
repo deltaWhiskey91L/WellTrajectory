@@ -25,7 +25,7 @@ def closure_azimuth(north, east):
 
 def closure_departure(north, east):
     """
-    Calculates the absolute horizontal departure from wellhead.
+    Absolute horizontal departure from wellhead.
     north and east must be the same unit
 
     :param north: northing cartesian location, n (L)
@@ -41,7 +41,7 @@ def closure_departure(north, east):
 
 def vertical_section(north, east, target_azimuth):
     """
-    Calculates the horizontal departure from the wellhead along the target azimuth.
+    Horizontal departure from the wellhead along the target azimuth.
     north and east must be the same unit
 
     :param north: northing cartesian location, n (L)

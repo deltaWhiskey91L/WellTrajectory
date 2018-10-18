@@ -14,9 +14,8 @@ def survey(md, inc, azi):
     :return: east, north, tvd, dls at survey points along the well.
     """
 
-    md = np.array(md)
-    inc = np.radians(np.array(inc))
-    azi = np.radians(np.array(azi))
+    inc = [np.radians(ele) for ele in inc]
+    azi = [np.radians(ele) for ele in azi]
 
     tvd, north, east = list([0]), list([0]), list([0])
     for i in range(1, len(md)):
@@ -44,9 +43,10 @@ def next_pt(md2, inc2, azi2):
 
     dm = md2[1] - md2[0]
     wA = unit_vector(inc2[0], azi2[0])
-    wB = unit_vector(inc2[0], azi2[0])
+    wB = unit_vector(inc2[1], azi2[1])
 
     dP = dm * (wA + wB) / np.linalg.norm(wA + wB)
+
     return dP[0], dP[1], dP[2]
 
 

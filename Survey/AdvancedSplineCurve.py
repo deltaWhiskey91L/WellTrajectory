@@ -22,6 +22,9 @@ def survey(md, inc, azi):
     mylogging.runlog.info('Calculating the survey using Advanced Spline Curvature.')
     mylogging.alglog.info('ASC Advanced Spline Curve')
 
+    inc = [np.radians(ele) for ele in inc]
+    azi = [np.radians(ele) for ele in azi]
+
     md = np.delete(md, 0)
     inc = np.delete(inc, 0)
     azi = np.delete(azi, 0)
@@ -40,7 +43,7 @@ def survey(md, inc, azi):
     k = curvature(lam, h, z, y_2nd)
     curve = curve_rate(y_2nd, k=k)
     wbr = rugosity(lam, y_2nd, z, k=k)
-    return position[0], position[1], position[2], curve[0], curve[1], curve[2], wbr
+    return position[2], position[1], position[0], np.degrees(curve[0]) * 100
 
 
 def trajectory(h, lam, z, n, md):
@@ -230,9 +233,9 @@ def curve_rate(y_2nd, k=None, lam=None, h=None, z=None):
 
     dls, build, turn = list([0]), list([0]), list([0])
     for i in range(0, len(y_2nd[0])):
-        dls.append(np.degrees(k[i]) * 100)
-        build.append(np.degrees(y_2nd[0][i]) * 100)
-        turn.append(np.degrees(la.norm([y_2nd[0][i], y_2nd[1][i]])) * 100)
+        dls.append(k[i])
+        build.append(y_2nd[2][i])
+        turn.append(la.norm([y_2nd[0][i], y_2nd[1][i]], ord=2))
     return dls, build, turn
 
 

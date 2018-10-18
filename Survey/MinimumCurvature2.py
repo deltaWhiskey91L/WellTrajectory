@@ -14,9 +14,8 @@ def survey(md, inc, azi):
     :return: east, north, tvd, dls at survey points along the well.
     """
 
-    md = np.array(md)
-    inc = np.radians(np.array(inc))
-    azi = np.radians(np.array(azi))
+    inc = [np.radians(ele) for ele in inc]
+    azi = [np.radians(ele) for ele in azi]
 
     tvd, north, east, dls = list([0]), list([0]), list([0]), list([0])
     for i in range(1, len(md)):
@@ -26,7 +25,7 @@ def survey(md, inc, azi):
         east.append(east[i - 1] + de)
         dls.append(dls_current)
 
-    return tvd, north, east
+    return tvd, north, east, dls
 
 
 def next_pt(md2, inc2, azi2):
@@ -44,15 +43,22 @@ def next_pt(md2, inc2, azi2):
     """
 
     dm = md2[1] - md2[0]
-    wA = unit_vector(inc2[0], azi2[0])
-    wB = unit_vector(inc2[0], azi2[0])
+    dP = np.zeros(3)
+    if inc2[0] == inc2[1] and azi2[0] == azi2[1]:
+        dP[0] = dm * np.cos(inc2[0])
+        dP[1] = dm * np.sin(inc2[0]) * np.cos(azi2[0])
+        dP[2] = dm * np.sin(inc2[0]) * np.sin(azi2[0])
+        dls = 0
+    else:
+        wA = unit_vector(inc2[0], azi2[0])
+        wB = unit_vector(inc2[1], azi2[1])
+        alpha = np.arccos(np.dot(wA, wB)) / 2
+        r = dm / (2 * alpha)
+        dc = 2 * r * np.sin(alpha)
+        dP = dc * (wA + wB) / np.linalg.norm(wA + wB)
+        dls = np.degrees(100 / r)
 
-    alpha = np.arccos(np.dot(wA, wB)) / 2
-    r = dm / (2 * alpha)
-    dc = 2 * r * np.sin(alpha)
-
-    dP = dc * (wA + wB) / np.linalg.norm(wA + wB)
-    return dP[0], dP[1], dP[2], 100 / r
+    return dP[0], dP[1], dP[2], dls
 
 
 def unit_vector(inc, azi):

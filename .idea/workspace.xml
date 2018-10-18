@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5e51d356-d052-45bd-b8cb-8cd52cab05f8" name="Default" comment="v0.9.14&#10;Added Tangential, Balanced Tangential, Average Angle, and Vector Average &#10;calculation methods.">
-      <change afterPath="$PROJECT_DIR$/Survey/MinimumCurvature2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Survey/RadiiOfCurvature.py" afterDir="false" />
+    <list default="true" id="5e51d356-d052-45bd-b8cb-8cd52cab05f8" name="Default" comment="v0.9.14.1&#10;Added Radii of Curvature and another version of Minimum Curvature.&#10;Updated comment blocks.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Results/hrcg100_asc.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Results/hrcg100_mcm.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Results/hrcg_asc.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Results/hrcg_mcm.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Survey/AdvancedSplineCurve.py" beforeDir="false" afterPath="$PROJECT_DIR$/Survey/AdvancedSplineCurve.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Survey/AverageAngle.py" beforeDir="false" afterPath="$PROJECT_DIR$/Survey/AverageAngle.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Survey/BalancedTangential.py" beforeDir="false" afterPath="$PROJECT_DIR$/Survey/BalancedTangential.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Survey/Generic.py" beforeDir="false" afterPath="$PROJECT_DIR$/Survey/Generic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Survey/MinimumCurvature.py" beforeDir="false" afterPath="$PROJECT_DIR$/Survey/MinimumCurvature.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Survey/MinimumCurvature2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Survey/MinimumCurvature2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Survey/RadiiOfCurvature.py" beforeDir="false" afterPath="$PROJECT_DIR$/Survey/RadiiOfCurvature.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Survey/Tangential.py" beforeDir="false" afterPath="$PROJECT_DIR$/Survey/Tangential.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Survey/VectorAverage.py" beforeDir="false" afterPath="$PROJECT_DIR$/Survey/VectorAverage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Utilities/writetofile.py" beforeDir="false" afterPath="$PROJECT_DIR$/Utilities/writetofile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/montecarlo.py" beforeDir="false" afterPath="$PROJECT_DIR$/montecarlo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trajectory.py" beforeDir="false" afterPath="$PROJECT_DIR$/Survey/trajectory.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,28 +41,29 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="csv" value="2" />
+          <entry key="csv" value="71" />
           <entry key="out" value="1" />
-          <entry key="py" value="21" />
+          <entry key="py" value="63" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="PLAIN_TEXT" value="3" />
-          <entry key="Python" value="21" />
+          <entry key="PLAIN_TEXT" value="72" />
+          <entry key="Python" value="63" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="351" />
-          <entry key="Python" value="3208" />
+          <entry key="PLAIN_TEXT" value="450" />
+          <entry key="Python" value="6520" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="csv" value="7" />
-          <entry key="py" value="3208" />
-          <entry key="txt" value="344" />
+          <entry key="dummy" value="5" />
+          <entry key="py" value="6520" />
+          <entry key="txt" value="438" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -62,8 +74,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="667">
-              <caret line="29" column="71" lean-forward="true" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="71" />
+            <state relative-caret-position="100">
+              <caret line="141" lean-forward="true" selection-start-line="141" selection-end-line="141" />
               <folding>
                 <element signature="e#0#75#0" expanded="true" />
               </folding>
@@ -72,43 +84,43 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test.py">
+        <entry file="file://$PROJECT_DIR$/Results/594survey_AdvancedSplines.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="349">
+              <caret line="166" column="86" lean-forward="true" selection-start-line="166" selection-start-column="86" selection-end-line="166" selection-end-column="86" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Survey/RadiiOfCurvature.py">
+        <entry file="file://$PROJECT_DIR$/Results/594survey_MinimumCurvature2.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="25" column="37" lean-forward="true" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Survey/VectorAverage.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="39" column="20" lean-forward="true" selection-start-line="39" selection-start-column="20" selection-end-line="41" selection-end-column="16" />
-              <folding>
-                <marker date="1539811370437" expanded="true" signature="1423:1752" ph="..." />
-              </folding>
+            <state relative-caret-position="362">
+              <caret line="166" column="30" lean-forward="true" selection-start-line="166" selection-start-column="30" selection-end-line="166" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Survey/MinimumCurvature2.py">
+        <entry file="file://$PROJECT_DIR$/Survey/AdvancedSplineCurve.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="28" column="27" lean-forward="true" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
+            <state relative-caret-position="3125">
+              <caret line="236" column="33" lean-forward="true" selection-start-line="236" selection-start-column="33" selection-end-line="236" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="19" column="103" lean-forward="true" selection-start-line="19" selection-start-column="103" selection-end-line="19" selection-end-column="103" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -141,8 +153,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/MonteCarlo.py" />
-        <option value="$PROJECT_DIR$/WellPlot.py" />
         <option value="$PROJECT_DIR$/MinimumCurvature.py" />
         <option value="$PROJECT_DIR$/AdvancedSplineCurve.py" />
         <option value="$PROJECT_DIR$/SurveyCalculations.py" />
@@ -167,38 +177,41 @@
         <option value="$PROJECT_DIR$/Data/survey.csv" />
         <option value="$PROJECT_DIR$/Data/edgar-in.csv" />
         <option value="$PROJECT_DIR$/Data/hrcg.csv" />
-        <option value="$PROJECT_DIR$/Utilities/writetofile.py" />
-        <option value="$PROJECT_DIR$/trajectory.py" />
         <option value="$PROJECT_DIR$/Results/test_mcm.csv" />
         <option value="$PROJECT_DIR$/Results/test_asc.csv" />
         <option value="$PROJECT_DIR$/Data/ex.csv" />
         <option value="$PROJECT_DIR$/Data/test.csv" />
-        <option value="$PROJECT_DIR$/Survey/MinimumCurvature.py" />
         <option value="$PROJECT_DIR$/Results/synthetic.csv" />
-        <option value="$PROJECT_DIR$/Survey/AdvancedSplineCurve.py" />
         <option value="$PROJECT_DIR$/Data/synthetic.csv" />
         <option value="$PROJECT_DIR$/Utilities/wellplot.py" />
         <option value="$PROJECT_DIR$/Results/synthetic_true.csv" />
         <option value="$PROJECT_DIR$/Survey/Synthetic.py" />
-        <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/Survey/Generic.py" />
-        <option value="$PROJECT_DIR$/Utilities/readfromfile.py" />
         <option value="$PROJECT_DIR$/Data/594survey.csv" />
         <option value="$PROJECT_DIR$/Utilities/mylogging.py" />
-        <option value="$PROJECT_DIR$/Survey/Tangential.py" />
+        <option value="$PROJECT_DIR$/trajectory.py" />
+        <option value="$PROJECT_DIR$/Survey/Generic.py" />
+        <option value="$PROJECT_DIR$/Utilities/readfromfile.py" />
+        <option value="$PROJECT_DIR$/Utilities/writetofile.py" />
+        <option value="$PROJECT_DIR$/Results/594survey_MinimumCurvature2.csv" />
         <option value="$PROJECT_DIR$/Survey/BalancedTangential.py" />
-        <option value="$PROJECT_DIR$/Survey/AverageAngle.py" />
-        <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/Survey/RadiiOfCurvature.py" />
+        <option value="$PROJECT_DIR$/Survey/Tangential.py" />
         <option value="$PROJECT_DIR$/Survey/VectorAverage.py" />
+        <option value="$PROJECT_DIR$/Survey/MinimumCurvature.py" />
+        <option value="$PROJECT_DIR$/Survey/AverageAngle.py" />
         <option value="$PROJECT_DIR$/Survey/MinimumCurvature2.py" />
+        <option value="$PROJECT_DIR$/Survey/RadiiOfCurvature.py" />
+        <option value="$PROJECT_DIR$/Survey/trajectory.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/Survey/AdvancedSplineCurve.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="width" value="1522" />
-    <option name="height" value="1932" />
+    <option name="x" value="264" />
+    <option name="y" value="1138" />
+    <option name="width" value="2544" />
+    <option name="height" value="1246" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -225,6 +238,11 @@
             <path>
               <item name="Well_Trajectory" type="b2602c69:ProjectViewProjectNode" />
               <item name="Well_Trajectory" type="462c0819:PsiDirectoryNode" />
+              <item name="Results" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Well_Trajectory" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Well_Trajectory" type="462c0819:PsiDirectoryNode" />
               <item name="Survey" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -246,11 +264,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Python\Well_Trajectory\Survey" />
       <recent name="C:\Python\Well_Trajectory" />
       <recent name="C:\Python\AdvancedSplineCurve" />
       <recent name="C:\Python\AdvancedSplineCurve\Utilities" />
       <recent name="C:\Python\AdvancedSplineCurve\Survey" />
-      <recent name="C:\Python\AdvancedSplineCurve\Data" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Python\Well_Trajectory\Survey" />
@@ -270,7 +288,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.main">
     <configuration name="Location" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AdvancedSplineCurve" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -363,8 +381,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.lines3d_demo" />
         <item itemvalue="Python.Location" />
       </list>
@@ -465,19 +483,26 @@
       <option name="project" value="LOCAL" />
       <updated>1539811105567</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="v0.9.14.1&#10;Added Radii of Curvature and another version of Minimum Curvature.&#10;Updated comment blocks.">
+      <created>1539812029071</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1539812029071</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2281787" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27285224" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3290398" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32660332" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32897863" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3111639" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39812645" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -493,12 +518,12 @@
       <window_info anchor="right" id="R Packages" order="4" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.4176707" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27285224" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3290398" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.33138174" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32897863" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.17577197" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39812645" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -527,46 +552,10 @@
     <MESSAGE value="v0.9.12.2&#10;Updated read survey file to add a MD=0 line at the beginning if not present." />
     <MESSAGE value="v0.9.13&#10;Generic survey calculations such as closure, departure, and section." />
     <MESSAGE value="v0.9.14&#10;Added Tangential, Balanced Tangential, Average Angle, and Vector Average &#10;calculation methods." />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.9.14&#10;Added Tangential, Balanced Tangential, Average Angle, and Vector Average &#10;calculation methods." />
+    <MESSAGE value="v0.9.14.1&#10;Added Radii of Curvature and another version of Minimum Curvature.&#10;Updated comment blocks." />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.9.14.1&#10;Added Radii of Curvature and another version of Minimum Curvature.&#10;Updated comment blocks." />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Data/hrcg_asc.csv" />
-    <entry file="file://$PROJECT_DIR$/Units.py" />
-    <entry file="file://$PROJECT_DIR$/Survey.py" />
-    <entry file="file://$PROJECT_DIR$/Results/hrcg_asc.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="8178" column="41" lean-forward="true" selection-start-line="8178" selection-start-column="30" selection-end-line="8178" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Results/hrcg100_mcm.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1123" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Data/29.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2908">
-          <caret line="1" column="10" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Data/22.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="23" lean-forward="true" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Temp1_AdvancedSplineCurve.zip/AdvancedSplineCurve/main.py" />
-    <entry file="file://$PROJECT_DIR$/Utilities/unitconverter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2618">
-          <caret line="156" column="8" selection-start-line="156" selection-start-column="8" selection-end-line="156" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Results/hrcg100_asc.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -657,13 +646,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utilities/writetofile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="5" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Results/synthetic.csv" />
     <entry file="file://$PROJECT_DIR$/Results/synthetictrue.csv" />
     <entry file="file://$USER_HOME$/Downloads/lines3d_demo.py" />
@@ -723,50 +705,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Survey/AdvancedSplineCurve.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="14" column="40" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/trajectory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="30" column="4" lean-forward="true" selection-start-line="30" selection-start-column="4" selection-end-line="32" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utilities/readfromfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="73" column="17" lean-forward="true" selection-start-line="73" selection-start-column="17" selection-end-line="73" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Survey/MinimumCurvature.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="29" column="71" lean-forward="true" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="71" />
-          <folding>
-            <element signature="e#0#75#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Utilities/mylogging.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -777,79 +715,202 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Survey/Tangential.py">
+    <entry file="file://$PROJECT_DIR$/Ellipsoid.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
-          <folding>
-            <marker date="1539811370474" expanded="true" signature="1203:1204" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Survey/Generic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <marker date="1539808586376" expanded="true" signature="66:71" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Survey/BalancedTangential.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="41" column="16" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Survey/AverageAngle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="41" column="16" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Data/594survey.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="124" column="15" lean-forward="true" selection-start-line="124" selection-start-column="15" selection-end-line="124" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="-1661">
+          <caret line="13" column="41" lean-forward="true" selection-start-line="13" selection-start-column="41" selection-end-line="13" selection-end-column="41" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Survey/RadiiOfCurvature.py">
+    <entry file="file://$PROJECT_DIR$/Survey/Generic.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="25" column="37" lean-forward="true" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
+        <state relative-caret-position="69">
+          <caret line="6" selection-start-line="6" selection-end-line="14" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <marker date="1539813764442" expanded="true" signature="66:71" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utilities/readfromfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Data/594survey.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="124" column="15" lean-forward="true" selection-start-line="124" selection-start-column="15" selection-end-line="124" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utilities/writetofile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="409">
+          <caret line="22" column="33" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Survey/BalancedTangential.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Survey/Tangential.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <marker date="1539818760188" expanded="true" signature="1195:1196" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Survey/MinimumCurvature.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="25" column="44" selection-start-line="25" selection-start-column="34" selection-end-line="25" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Survey/AverageAngle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Survey/VectorAverage.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="39" column="20" lean-forward="true" selection-start-line="39" selection-start-column="20" selection-end-line="41" selection-end-column="16" />
+        <state relative-caret-position="537">
+          <caret line="57" column="20" lean-forward="true" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
           <folding>
-            <marker date="1539811370437" expanded="true" signature="1423:1752" ph="..." />
+            <marker date="1539819926161" expanded="true" signature="1416:1745" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Results/594survey_VectorAverage.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="166" column="87" selection-start-line="166" selection-start-column="30" selection-end-line="166" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Results/594survey_AverageAngle.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="166" column="30" selection-start-line="166" selection-start-column="30" selection-end-line="166" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Results/594survey_BalancedTangential.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="166" column="86" lean-forward="true" selection-start-line="166" selection-start-column="30" selection-end-line="166" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Results/594survey_Tangential.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="166" column="87" lean-forward="true" selection-start-line="166" selection-start-column="30" selection-end-line="166" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Results/594survey_MinimumCurvature.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="166" column="86" lean-forward="true" selection-start-line="166" selection-start-column="30" selection-end-line="166" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Results/594survey_RadiiOfCurvature.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="166" column="72" selection-start-line="166" selection-start-column="72" selection-end-line="166" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Survey/RadiiOfCurvature.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="64" column="27" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Survey/MinimumCurvature2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="28" column="27" lean-forward="true" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
+        <state relative-caret-position="345">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="17" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Survey/trajectory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="293" column="36" lean-forward="true" selection-start-line="293" selection-start-column="36" selection-end-line="293" selection-end-column="36" />
+          <folding>
+            <marker date="1539823244568" expanded="true" signature="260:3365" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Results/594survey_AdvancedSplines.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="166" column="86" lean-forward="true" selection-start-line="166" selection-start-column="86" selection-end-line="166" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Results/594survey_MinimumCurvature2.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="166" column="30" lean-forward="true" selection-start-line="166" selection-start-column="30" selection-end-line="166" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="19" column="103" lean-forward="true" selection-start-line="19" selection-start-column="103" selection-end-line="19" selection-end-column="103" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="141" lean-forward="true" selection-start-line="141" selection-end-line="141" />
+          <folding>
+            <element signature="e#0#75#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Survey/AdvancedSplineCurve.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3125">
+          <caret line="236" column="33" lean-forward="true" selection-start-line="236" selection-start-column="33" selection-end-line="236" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
