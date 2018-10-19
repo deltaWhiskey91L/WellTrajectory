@@ -20,23 +20,23 @@ def object_csv(survey, rnd=False):
               'ft,dega,dega,ft,ft,ft,dega,ft,ft,dega/100ft,dega/100ft,dega/100ft,dega\n']
 
     if rnd is True:
-        md, inc, azi = np.round(survey.MD, 2), np.round(survey.Inc, 2), np.round(survey.Azi, 2)
-        tvd, ns, ew = np.round(survey.TVD, 2), np.round(survey.North, 2), np.round(survey.East, 2)
-        closure, departure = np.round(survey.Closure, 2), np.round(survey.Departure, 2)
-        section = np.round(survey.Section, 2)
-        dls, build, turn = np.round(survey.DLS, 2), np.round(survey.Build, 2), np.round(survey.Turn, 2)
+        md, inc, azi = np.round(survey.md, 2), np.round(survey.inc, 2), np.round(survey.azi, 2)
+        tvd, ns, ew = np.round(survey.tvd, 2), np.round(survey.north, 2), np.round(survey.east, 2)
+        closure, departure = np.round(survey.closure, 2), np.round(survey.departure, 2)
+        section = np.round(survey.section, 2)
+        dls, build, turn = np.round(survey.dls, 2), np.round(survey.build, 2), np.round(survey.turn, 2)
     else:
-        md, inc, azi, tvd, ns, ew = survey.MD, survey.Inc, survey.Azi, survey.TVD, survey.North, survey.East
-        closure, departure, section = survey.Closure, survey.Departure, survey.Section
-        dls, build, turn = survey.DLS, survey.Build, survey.Turn
+        md, inc, azi, tvd, ns, ew = survey.md, survey.inc, survey.azi, survey.tvd, survey.north, survey.east
+        closure, departure, section = survey.closure, survey.departure, survey.section
+        dls, build, turn = survey.dls, survey.build, survey.turn
 
     f = open(file, 'w')
     f.writelines(header)
-    for i in range(len(survey.MD)):
+    for i in range(len(survey.md)):
         line = [str(md[i]) + ',' + str(inc[i]) + ',' + str(azi[i]) + ',' + str(tvd[i]) + ','
                 + str(ns[i]) + ',' + str(ew[i]) + ',' + str(closure[i]) + ','
                 + str(departure[i]) + ',' + str(section[i]) + ',' + str(dls[i]) + ','
-                + str(build[i]) + ',' + str(turn[i]) + ',' + str(survey.Target) +'\n']
+                + str(build[i]) + ',' + str(turn[i]) + ',' + str(survey.target) + '\n']
         f.writelines(line)
     f.close()
 

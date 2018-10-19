@@ -204,7 +204,7 @@ def minimum_curvature(survey_object, target=None, rnd=False):
     :param rnd: round to nearest 100th
     :type rnd: bool
     """
-    from SurveyCalculationMethods import MinimumCurvature2
+    from SurveyCalculationMethods import MinimumCurvature
 
     mylogging.runlog.info('Survey: Calculate survey for {0} using the Minimum Curvature method.'.format(survey_object.name))
     surv = Generic.SurveyMethod(survey_object, target)
@@ -212,7 +212,7 @@ def minimum_curvature(survey_object, target=None, rnd=False):
     surv.method = 'MinimumCurvature'
 
     surv.tvd, surv.north, surv.east, surv.dls,  surv.build,  surv.turn \
-        = MinimumCurvature2.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi))
+        = MinimumCurvature.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi))
 
     if surv.target is None:
         surv.target = closure_azimuth(surv.north[-1], surv.east[-1])

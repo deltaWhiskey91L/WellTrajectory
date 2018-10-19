@@ -14,18 +14,18 @@ def survey(md, inc, azi):
     :return: east, north, tvd, dls at survey points along the well.
     """
 
-    inc = [np.radians(ele) for ele in inc]
-    azi = [np.radians(ele) for ele in azi]
-
-    tvd, north, east, dls = list([0]), list([0]), list([0]), list([0])
+    tvd, north, east, dls, turn, build = list([0]), list([0]), list([0]), list([0]), list([0]), list([0])
     for i in range(1, len(md)):
-        dv, dn, de, dls_current = next_pt([md[i - 1], md[i]], [inc[i - 1], inc[i]], [azi[i - 1], azi[i]])
+        dv, dn, de, dls_current, turn_current, build_current \
+            = next_pt([md[i - 1], md[i]], [inc[i - 1], inc[i]], [azi[i - 1], azi[i]])
         tvd.append(tvd[i - 1] + dv)
         north.append(north[i - 1] + dn)
         east.append(east[i - 1] + de)
         dls.append(dls_current)
+        turn.append(turn_current)
+        build.append(build_current)
 
-    return tvd, north, east, dls
+    return tvd, north, east, dls, turn, build
 
 
 def next_pt(md2, inc2, azi2):

@@ -25,9 +25,9 @@ class Survey:
         from Utilities import readfromfile as read
         md, inc, azi = read.survey(self.file)
 
-        self.MD = np.array(md)
-        self.Inc = np.array(inc)
-        self.Azi = np.array(azi)
+        self.md = np.array(md)
+        self.inc = np.array(inc)
+        self.azi = np.array(azi)
 
 
 class SurveyMethod:
@@ -37,9 +37,9 @@ class SurveyMethod:
         if target < 0:
             target = target + 360
         self.target = target
-        self.md = survey.MD
-        self.inc = survey.Inc
-        self.azi = survey.Azi
+        self.md = survey.md
+        self.inc = survey.inc
+        self.azi = survey.azi
         self.tvd = None
         self.north = None
         self.east = None

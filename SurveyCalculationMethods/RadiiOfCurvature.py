@@ -14,18 +14,18 @@ def survey(md, inc, azi):
     :return: east, north, tvd, dls at survey points along the well.
     """
 
-    inc = [np.radians(ele) for ele in inc]
-    azi = [np.radians(ele) for ele in azi]
-
-    tvd, north, east, dls = list([0]), list([0]), list([0]), list([0])
+    tvd, north, east, dls, turn, build = list([0]), list([0]), list([0]), list([0]), list([0]), list([0])
     for i in range(1, len(md)):
-        dv, dn, de, dls_current = next_pt([md[i - 1], md[i]], [inc[i - 1], inc[i]], [azi[i - 1], azi[i]])
+        dv, dn, de, dls_current, turn_current, build_current \
+            = next_pt([md[i - 1], md[i]], [inc[i - 1], inc[i]], [azi[i - 1], azi[i]])
         tvd.append(tvd[i - 1] + dv)
         north.append(north[i - 1] + dn)
         east.append(east[i - 1] + de)
         dls.append(dls_current)
+        turn.append(turn_current)
+        build.append(build_current)
 
-    return tvd, north, east, dls
+    return tvd, north, east, dls, turn, build
 
 
 def next_pt(md2, inc2, azi2):
@@ -62,9 +62,9 @@ def next_pt(md2, inc2, azi2):
         dn = r_hor * (np.sin(azi2[1]) - np.sin(azi2[0]))
         de = r_hor * (np.cos(azi2[0]) - np.cos(azi2[1]))
 
-    dls = np.degrees(100 * np.sqrt((1 / r_vert) ** 2 + (1 / r_hor) ** 2))
-    build = buildturn_rate(inc2[0], inc2[1], dm)
-    turn = buildturn_rate(azi2[0], azi2[1], dm)
+    dls = np.degrees(np.sqrt((1 / r_vert) ** 2 + (1 / r_hor) ** 2)) * 100
+    build = np.degrees(buildturn_rate(inc2[0], inc2[1], dm)) * 100
+    turn = np.degrees(buildturn_rate(azi2[0], azi2[1], dm)) * 100
 
     return dv, dn, de, dls, build, turn
 
@@ -74,4 +74,4 @@ def buildturn_rate(angle0, angle1, delta_md):
     if delta_md == 0:
         return 0
 
-    return np.degrees(delta_angle) * 100 / delta_md
+    return np.degrees(delta_angle) / delta_md

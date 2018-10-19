@@ -22,9 +22,6 @@ def survey(md, inc, azi):
     mylogging.runlog.info('Calculating the survey using Advanced Spline Curvature.')
     mylogging.alglog.info('ASC Advanced Spline Curve')
 
-    inc = [np.radians(ele) for ele in inc]
-    azi = [np.radians(ele) for ele in azi]
-
     md = np.delete(md, 0)
     inc = np.delete(inc, 0)
     azi = np.delete(azi, 0)
