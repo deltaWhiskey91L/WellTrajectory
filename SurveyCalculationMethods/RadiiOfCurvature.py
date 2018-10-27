@@ -62,7 +62,7 @@ def next_pt(md2, inc2, azi2):
         dn = r_hor * (np.sin(azi2[1]) - np.sin(azi2[0]))
         de = r_hor * (np.cos(azi2[0]) - np.cos(azi2[1]))
 
-    dls = np.degrees(np.sqrt((1 / r_vert) ** 2 + (1 / r_hor) ** 2)) * 100
+    dls = np.degrees(np.sqrt((1 / r_vert) ** 2 + (np.sin((inc2[0] + inc2[1]) / 2) / r_hor) ** 2)) * 100
     build = np.degrees(buildturn_rate(inc2[0], inc2[1], dm)) * 100
     turn = np.degrees(buildturn_rate(azi2[0], azi2[1], dm)) * 100
 

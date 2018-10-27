@@ -23,13 +23,15 @@ def complete_survey(file=root_path + '/Data/original_survey.csv'):
     lines.pop(0)
     lines.pop(0)
 
-    md, tvd, ns, ew, closure, departure = list(), list(), list(), list(), list(), list()
+    md, inc, azi = list(), list(), list()
+    tvd, ns, ew, closure, departure = list(), list(), list(), list(), list()
     section, dls = list(), list()
     for line in lines:
-        md.append(float(line[0])), tvd.append(float(line[3])), ns.append(float(line[4])), ew.append(float(line[5]))
+        md.append(float(line[0])), inc.append(float(line[1])), azi.append(float(line[2]))
+        tvd.append(float(line[3])), ns.append(float(line[4])), ew.append(float(line[5]))
         closure.append(float(line[6])), departure.append(float(line[7])), section.append(float(line[7])), \
         dls.append(float(line[8]))
-    return md, tvd, ns, ew, closure, departure, section, dls
+    return md, inc, azi, tvd, ns, ew, closure, departure, section, dls
 
 
 def survey(file=root_path + '/Data/original_survey.csv'):
@@ -48,10 +50,10 @@ def survey(file=root_path + '/Data/original_survey.csv'):
     for line in lines:
         md.append(float(line[0])), inc.append(float(line[1])), azi.append(float(line[2]))
 
-    if md[0] != 0:
-        md.insert(0, 0)
-        inc.insert(0, 0)
-        azi.insert(0, azi[0])
+    # if md[0] != 0:
+    #     md.insert(0, 0)
+    #     inc.insert(0, 0)
+    #     azi.insert(0, azi[0])
 
     if unit_list is not None:
         md = units.from_to(md, unit_list[0], 'ft')

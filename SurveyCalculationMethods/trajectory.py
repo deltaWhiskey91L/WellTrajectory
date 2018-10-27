@@ -41,7 +41,7 @@ def average_angle(survey_object, target=None, rnd=False):
     surv.build = np.zeros(len(surv.md)) * np.nan
     surv.turn = np.zeros(len(surv.md)) * np.nan
     surv.rugosity = np.zeros(len(surv.md)) * np.nan
-    write.object_csv(surv, rnd=rnd)
+    write.complete_survey(surv, rnd=rnd)
     return surv
 
 
@@ -79,7 +79,7 @@ def tangential(survey_object, target=None, rnd=False):
     surv.build = np.zeros(len(surv.md)) * np.nan
     surv.turn = np.zeros(len(surv.md)) * np.nan
     surv.rugosity = np.zeros(len(surv.md)) * np.nan
-    write.object_csv(surv, rnd=rnd)
+    write.complete_survey(surv, rnd=rnd)
     return surv
 
 
@@ -117,7 +117,7 @@ def balanced_tangential(survey_object, target=None, rnd=False):
     surv.build = np.zeros(len(surv.md)) * np.nan
     surv.turn = np.zeros(len(surv.md)) * np.nan
     surv.rugosity = np.zeros(len(surv.md)) * np.nan
-    write.object_csv(surv, rnd=rnd)
+    write.complete_survey(surv, rnd=rnd)
     return surv
 
 
@@ -155,7 +155,7 @@ def vector_average(survey_object, target=None, rnd=False):
     surv.build = np.zeros(len(surv.md)) * np.nan
     surv.turn = np.zeros(len(surv.md)) * np.nan
     surv.rugosity = np.zeros(len(surv.md)) * np.nan
-    write.object_csv(surv, rnd=rnd)
+    write.complete_survey(surv, rnd=rnd)
     return surv
 
 
@@ -190,11 +190,11 @@ def radii_of_curvature(survey_object, target=None, rnd=False):
     surv.departure = closure_departure(surv.north, surv.east)
     surv.section = vertical_section(surv.north, surv.east, surv.target)
     surv.rugosity = np.zeros(len(surv.md)) * np.nan
-    write.object_csv(surv, rnd=rnd)
+    write.complete_survey(surv, rnd=rnd)
     return surv
 
 
-def minimum_curvature(survey_object, target=None, rnd=False):
+def minimum_curvature(survey_object, target=None, rnd=False, location=(0, 0)):
     """
     Survey calculations using the Minimum Curvature Method and writes results to .csv file.
 
@@ -203,13 +203,16 @@ def minimum_curvature(survey_object, target=None, rnd=False):
     :type target: float
     :param rnd: round to nearest 100th
     :type rnd: bool
+    :param location: wellhead local location (N, S)
+    :type location: tuple
     """
     from SurveyCalculationMethods import MinimumCurvature
 
     mylogging.runlog.info('Survey: Calculate survey for {0} using the Minimum Curvature method.'.format(survey_object.name))
     surv = Generic.SurveyMethod(survey_object, target)
     surv.name = survey_object.name
-    surv.method = 'MinimumCurvature'
+    surv.method = 'mcm'
+    survey_object.location = location
 
     surv.tvd, surv.north, surv.east, surv.dls,  surv.build,  surv.turn \
         = MinimumCurvature.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi))
@@ -225,11 +228,11 @@ def minimum_curvature(survey_object, target=None, rnd=False):
     surv.departure = closure_departure(surv.north, surv.east)
     surv.section = vertical_section(surv.north, surv.east, surv.target)
     surv.rugosity = np.zeros(len(surv.md)) * np.nan
-    write.object_csv(surv, rnd=rnd)
+    write.complete_survey(surv, rnd=rnd)
     return surv
 
 
-def advanced_splines(survey_object, target=None, rnd=False):
+def advanced_splines(survey_object, target=None, rnd=False, location=(0, 0)):
     """
     Survey calculations using the Advanced Spline Curve Method and writes results to .csv file.
 
@@ -238,13 +241,16 @@ def advanced_splines(survey_object, target=None, rnd=False):
     :type target: float
     :param rnd: round to nearest 100th
     :type rnd: bool
+    :param location: wellhead local location (N, S)
+    :type location: tuple
     """
     from SurveyCalculationMethods import AdvancedSplineCurve
 
     mylogging.runlog.info('Survey: Calculate survey for {0} using the Advanced Spline Curve method.'.format(survey_object.name))
     surv = Generic.SurveyMethod(survey_object, target)
     surv.name = survey_object.name
-    surv.method = 'AdvancedSplineCurve'
+    surv.method = 'asc'
+    survey_object.location = location
 
     surv.tvd, surv.north, surv.east, surv.dls, surv.build, surv.turn, surv.rugosity \
         = AdvancedSplineCurve.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi))
@@ -259,9 +265,7 @@ def advanced_splines(survey_object, target=None, rnd=False):
     surv.closure = closure_azimuth(surv.north, surv.east)
     surv.departure = closure_departure(surv.north, surv.east)
     surv.section = vertical_section(surv.north, surv.east, surv.target)
-    surv.build = np.zeros(len(surv.md)) * np.nan
-    surv.turn = np.zeros(len(surv.md)) * np.nan
-    write.object_csv(surv, rnd=rnd)
+    write.complete_survey(surv, rnd=rnd)
     return surv
 
 

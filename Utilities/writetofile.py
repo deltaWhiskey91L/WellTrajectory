@@ -5,7 +5,7 @@ import os
 root_path = os.path.dirname(os.path.dirname(__file__))
 
 
-def object_csv(survey, rnd=False):
+def complete_survey(survey, rnd=False):
     """
     Writes complete survey to file
     :param survey: SurveyMethod object
@@ -41,24 +41,24 @@ def object_csv(survey, rnd=False):
     f.close()
 
 
-def survey_csv(survey, name=None, method='mcm', iteration=None):
-    if iteration is not None:
-        mylogging.runlog.info('Write: Writing the {0} survey to .csv.'.format(iteration))
-        file = root_path + '/Results/{0}_{1}{2}.csv'.format(name, method, iteration)
-    else:
-        mylogging.runlog.info('Write: Writing the survey to .csv.')
-        file = root_path + '/Results/{0}_{1}.csv'.format(name, method)
+def survey_measurements(md, inc, azi, file):
+    """
+    Writes the survey measurements to csv
+    :param md: measured depth
+    :type md: list
+    :param inc: inclination
+    :type inc: list
+    :param azi: azimuth
+    :type azi: list
+    :param file: file path
+    :type file: str
+    """
+    mylogging.runlog.info('Write: Writing the survey to .csv.')
 
-    header = ['MD,Inc,Azi,TVD,NS,EW,Closure,Departure,Section,DLS\n',
-              'ft,dega,dega,ft,ft,ft,dega,ft,ft,dega/100ft\n']
+    header = ['MD,Inc,Azi\n', 'ft,dega,dega\n']
 
     f = open(file, 'w')
     f.writelines(header)
-    survey = np.round(survey, 2)
-
-    for i in range(0, len(survey[0])):
-        line = [str(survey[0][i]) + ',' + str(survey[1][i]) + ',' + str(survey[2][i]) + ',' + str(survey[3][i]) + ','
-                + str(survey[4][i]) + ',' + str(survey[5][i]) + ',' + str(survey[6][i]) + ','
-                + str(survey[7][i]) + ',' + str(survey[8][i]) + ',' + str(survey[9][i]) + '\n']
-        f.writelines(line)
+    for i in range(len(md)):
+        f.writelines([str(md[i]) + ',' + str(inc[i]) + ',' + str(azi[i]) + '\n'])
     f.close()

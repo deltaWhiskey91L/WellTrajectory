@@ -22,9 +22,9 @@ def survey(md, inc, azi):
     mylogging.runlog.info('Calculating the survey using Advanced Spline Curvature.')
     mylogging.alglog.info('ASC Advanced Spline Curve')
 
-    md = np.delete(md, 0)
-    inc = np.delete(inc, 0)
-    azi = np.delete(azi, 0)
+    # md = np.delete(md, 0)
+    # inc = np.delete(inc, 0)
+    # azi = np.delete(azi, 0)
 
     n = len(md)
     h = md[1:] - md[:-1]
@@ -37,6 +37,10 @@ def survey(md, inc, azi):
         y_2nd.append(Y_second(lam[coord], h, z[coord]))
 
     position = trajectory(h, lam, z, n, md)
+    position[0] = np.delete(position[0], 0)
+    position[1] = np.delete(position[1], 0)
+    position[2] = np.delete(position[2], 0)
+
     k = curvature(lam, h, z, y_2nd)
     curve = curve_rate(y_2nd, k=k)
     wbr = rugosity(lam, y_2nd, z, k=k)
