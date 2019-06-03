@@ -7,7 +7,7 @@ from numpy import linalg as la
 # Tortuosity and Rugosity. IADC/SPE Drilling Conference and Exhibition. Fort Worth, TX, USA. 1-3 March
 
 
-def survey(md, inc, azi):
+def survey(md, inc, azi, err_model=(0, 0, 0)):
     """Calculates well survey using Advanced Spline Curve Method
 
     :param md: Array of Measured Depth (m)
@@ -16,6 +16,8 @@ def survey(md, inc, azi):
     :type inc: np.array
     :param azi: Array of Azimuth (dega)
     :type azi: np.array
+    :param err_model: 2-sigma uncertainty in measurement (MD, Inc, Azi)
+    :type err_model: tuple
     :return [easting (m), northing (m), tvd (m), dls (dega/m), build (dega/m), turn (dega/m), rugosity]
     :rtype: [float, float, float, float, float, float, float]
     """
@@ -29,23 +31,32 @@ def survey(md, inc, azi):
     n = len(md)
     h = md[1:] - md[:-1]
 
-    lam, v, z, y_2nd = list(), list(), list(), list()
+    lam, v, z, y_2nd, err = list(), list(), list(), list(), list()
     for coord in range(0, 3):
         lam.append(lambda_vector(inc, azi, coord))
         v.append(v_vector(lam[coord], h))
         z.append(z_vector(h, v[coord]))
         y_2nd.append(Y_second(lam[coord], h, z[coord]))
+        err0, err1, err2 = error_model(lam[coord], h, z[coord], inc, azi, coord)
+        err.append(err_model[0] * err0 + err_model[1] * err1 + err_model[2] * err2)
 
     position = trajectory(h, lam, z, n, md)
     position[0] = np.delete(position[0], 0)
     position[1] = np.delete(position[1], 0)
     position[2] = np.delete(position[2], 0)
 
+    errV, errN, errE = [0], [0], [0]
+    for i in range(len(err[0])):
+        errN.append(errN[i] + np.abs(err[0][i]))
+        errE.append(errE[i] + np.abs(err[1][i]))
+        errV.append(errV[i] + np.abs(err[2][i]))
+
     k = curvature(lam, h, z, y_2nd)
     curve = curve_rate(y_2nd, k=k)
     wbr = rugosity(lam, y_2nd, z, k=k)
     return position[2], position[1], position[0], np.degrees(curve[0]) * 100, \
-           np.degrees(curve[1]) * 100, np.degrees(curve[2]) * 100, np.degrees(wbr) * 100
+           np.degrees(curve[1]) * 100, np.degrees(curve[2]) * 100, np.degrees(wbr) * 100, \
+           errN, errE, errV
 
 
 def trajectory(h, lam, z, n, md):
@@ -60,6 +71,25 @@ def trajectory(h, lam, z, n, md):
                 delta += delta_position(lam[coord][j], B[j], C[j], D[j], h[j])
             position[coord][i] = delta
     return position
+
+
+def lambda_derivative(inc, azi):
+    """
+    Well vector derivative for a given inc / azi
+    :param inc: inclination (rad)
+    :type inc: float
+    :param azi: azimuth (rad)
+    :type azi: float
+    :return: lambda derivative matrix
+    """
+
+    dldp = np.zeros((3, 3))
+    dldp[1][0] = np.cos(inc) * np.sin(azi)
+    dldp[1][1] = np.cos(inc) * np.cos(azi)
+    dldp[1][2] = - np.sin(inc)
+    dldp[2][0] = np.sin(inc) * np.cos(azi)
+    dldp[2][1] = - np.sin(inc) * np.cos(azi)
+    return dldp
 
 
 def lambda_vector(inc, azi, xyz_dimension):
@@ -201,6 +231,28 @@ def z_0(z, h):
 
 def z_n(z, h):
     return z[-1] + (z[-1] - z[-2]) * h[-1] / h[-2]
+
+
+def error_model(lam, h, z, inc, azi, coord):
+    drdD = np.zeros(len(lam) - 1)
+    drdI = np.zeros(len(lam) - 1)
+    drdA = np.zeros(len(lam) - 1)
+
+    if coord == 0:
+        coord = 1
+    if coord == 1:
+        coord = 0
+
+    for i in range(len(lam) - 1):
+        dldp = lambda_derivative(inc[i], azi[i])
+        drdD[i] = lam[i] + 0.5 * (lam[i + 1] - lam[i]) \
+                  - h[i] ** 2 / 2 * (0.5 * z[i + 1] + z[i]) \
+                  + h[i] ** 2 / 2 * z[i] \
+                  + h[i] ** 2 / 8 * (z[i + 1] - z[i])
+        drdI[i] = 3 / 2 * h[i] * dldp[1][coord]
+        drdA[i] = 2 * h[i] * dldp[2][coord] + h[i] / 2
+
+    return drdD, drdI, drdA
 
 
 def delta_position(A, B, C, D, h):

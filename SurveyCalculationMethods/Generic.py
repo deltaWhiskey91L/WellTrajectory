@@ -6,7 +6,7 @@ import os
 
 
 class Survey:
-    def __init__(self, file_name, path=None, location=(0, 0)):
+    def __init__(self, file_name=None, path=None, location=(0, 0)):
         """
         :param file_name: survey file name
         :type file_name: str
@@ -15,31 +15,66 @@ class Survey:
         :param location: wellhead local [north, east] position
         :type location: list
         """
-        if path is None:
-            path = os.path.dirname(os.path.dirname(__file__)) + '/Data/'
 
-        self.name = file_name
-        self.file = path + self.name + '.csv'
-        self.location = location
+        if file_name is not None:
+            if path is None:
+                path = os.path.dirname(os.path.dirname(__file__)) + '/Data/'
 
-        from Utilities import readfromfile as read
-        md, inc, azi = read.survey(self.file)
+            self.name = file_name
+            self.file = path + self.name + '.csv'
+            self.location = location
 
-        self.md = np.array(md)
-        self.inc = np.array(inc)
-        self.azi = np.array(azi)
+            from Utilities import readfromfile as read
+            md, inc, azi = read.survey(self.file)
+
+            self.md = np.array(md)
+            self.inc = np.array(inc)
+            self.azi = np.array(azi)
+        else:
+            self.name = None
+            self.file = None
+            self.location = location
+            self.md = None
+            self.inc = None
+            self.azi = None
+
+
+class SurveyError:
+    def __init__(self, name):
+        self.name = name
+        self.method = None
+        self.tvd = None
+        self.tvd_std = None
+        self.north = None
+        self.north_std = None
+        self.east = None
+        self.east_std = None
+        self.vector = None
+        self.up = None
+        self.up_std = None
+        self.right = None
+        self.right_std = None
+        self.forward = None
+        self.forward_std = None
 
 
 class SurveyMethod:
-    def __init__(self, survey, target=None):
+    def __init__(self, survey=None, target=None):
         self.method = None
-        self.name = survey.name
-        if target < 0:
-            target = target + 360
+        if survey is not None:
+            self.name = survey.name
+            self.md = survey.md
+            self.inc = survey.inc
+            self.azi = survey.azi
+        else:
+            self.name = None
+            self.md = None
+            self.inc = None
+            self.azi = None
+        if target is not None:
+            if target < 0:
+                target = target + 360
         self.target = target
-        self.md = survey.md
-        self.inc = survey.inc
-        self.azi = survey.azi
         self.tvd = None
         self.north = None
         self.east = None
@@ -50,6 +85,9 @@ class SurveyMethod:
         self.build = None
         self.turn = None
         self.rugosity = None
+        self.errN = None
+        self.errE = None
+        self.errV = None
 
 
 def closure_azimuth(north, east):

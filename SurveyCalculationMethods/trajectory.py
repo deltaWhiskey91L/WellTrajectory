@@ -194,7 +194,7 @@ def radii_of_curvature(survey_object, target=None, rnd=False):
     return surv
 
 
-def minimum_curvature(survey_object, target=None, rnd=False, location=(0, 0)):
+def minimum_curvature(survey_object, target=None, rnd=False, location=(0, 0), error=(0, 0, 0), writecsv=False):
     """
     Survey calculations using the Minimum Curvature Method and writes results to .csv file.
 
@@ -206,7 +206,7 @@ def minimum_curvature(survey_object, target=None, rnd=False, location=(0, 0)):
     :param location: wellhead local location (N, S)
     :type location: tuple
     """
-    from SurveyCalculationMethods import MinimumCurvature
+    from SurveyCalculationMethods import MinimumCurvature2
 
     mylogging.runlog.info('Survey: Calculate survey for {0} using the Minimum Curvature method.'.format(survey_object.name))
     surv = Generic.SurveyMethod(survey_object, target)
@@ -214,8 +214,8 @@ def minimum_curvature(survey_object, target=None, rnd=False, location=(0, 0)):
     surv.method = 'mcm'
     survey_object.location = location
 
-    surv.tvd, surv.north, surv.east, surv.dls,  surv.build,  surv.turn \
-        = MinimumCurvature.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi))
+    surv.tvd, surv.north, surv.east, surv.dls,  surv.build,  surv.turn, surv.errV, surv.errN, surv.errE \
+        = MinimumCurvature2.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi), error=error)
 
     if surv.target is None:
         surv.target = closure_azimuth(surv.north[-1], surv.east[-1])
@@ -228,11 +228,13 @@ def minimum_curvature(survey_object, target=None, rnd=False, location=(0, 0)):
     surv.departure = closure_departure(surv.north, surv.east)
     surv.section = vertical_section(surv.north, surv.east, surv.target)
     surv.rugosity = np.zeros(len(surv.md)) * np.nan
-    write.complete_survey(surv, rnd=rnd)
+
+    if writecsv is True:
+        write.complete_survey(surv, rnd=rnd)
     return surv
 
 
-def advanced_splines(survey_object, target=None, rnd=False, location=(0, 0)):
+def advanced_splines(survey_object, target=None, rnd=False, location=(0, 0), error=(0, 0, 0), writecsv=False):
     """
     Survey calculations using the Advanced Spline Curve Method and writes results to .csv file.
 
@@ -243,6 +245,8 @@ def advanced_splines(survey_object, target=None, rnd=False, location=(0, 0)):
     :type rnd: bool
     :param location: wellhead local location (N, S)
     :type location: tuple
+    :param error: 2-sigma error of the survey measurements (MD, Inc, Azi)
+    :type error: tuple
     """
     from SurveyCalculationMethods import AdvancedSplineCurve
 
@@ -252,8 +256,8 @@ def advanced_splines(survey_object, target=None, rnd=False, location=(0, 0)):
     surv.method = 'asc'
     survey_object.location = location
 
-    surv.tvd, surv.north, surv.east, surv.dls, surv.build, surv.turn, surv.rugosity \
-        = AdvancedSplineCurve.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi))
+    surv.tvd, surv.north, surv.east, surv.dls, surv.build, surv.turn, surv.rugosity, surv.errN, surv.errE, surv.errV \
+        = AdvancedSplineCurve.survey(surv.md, np.radians(surv.inc), np.radians(surv.azi), err_model=error)
 
     if surv.target is None:
         surv.target = closure_azimuth(surv.north[-1], surv.east[-1])
@@ -265,7 +269,8 @@ def advanced_splines(survey_object, target=None, rnd=False, location=(0, 0)):
     surv.closure = closure_azimuth(surv.north, surv.east)
     surv.departure = closure_departure(surv.north, surv.east)
     surv.section = vertical_section(surv.north, surv.east, surv.target)
-    write.complete_survey(surv, rnd=rnd)
+    if writecsv is True:
+        write.complete_survey(surv, rnd=rnd)
     return surv
 
 
@@ -278,7 +283,7 @@ def vertical_section(north, east, target_azimuth):
     :type north: float
     :param east: easting cartesian location, e (L)
     :type east: float
-    :param target_azimuth: target azimuth (dega)
+    :param target_azimuth: target azimuth (rad)
     :type target_azimuth: float
     :return section: Vertical Section
     :return section: float
@@ -320,6 +325,16 @@ def closure_azimuth(north, east):
     :return: closure azimuth (dega)
     :rtype: np.array
     """
+
+    if isinstance(north, float) is True:
+        closure = np.degrees(np.arctan2(north, east))
+        if (closure <= 180) and (closure > 90):
+            closure = 450 - closure
+        elif (closure <= 90) and (closure >= 0):
+            closure = 90 - closure
+        else:
+            closure = 90 + math.fabs(closure)
+        return closure
 
     closure = np.zeros(len(north))
     for i in range(len(north)):
